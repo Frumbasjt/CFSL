@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Group fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line fx:id="line" endX="150.0" startY="50.0" />
+      <Pane fx:id="arrowWrapper" layoutX="140.0" layoutY="-20.0" prefHeight="40.0" prefWidth="20.0" rotate="70.5">
+         <children>
+            <Polygon fill="WHITE" layoutX="10.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-10.0" />
+                <Double fx:value="20.0" />
+                
+                <Double fx:value="10.0" />
+                <Double fx:value="20.0" />
+                
+                <Double fx:value="0.0" />
+                <Double fx:value="0.0" />
+              </points>
+            </Polygon>
+         </children>
+      </Pane>
+      <Circle fx:id="toAnchor" fill="WHITE" layoutX="150.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="flow-anchor" />
+      <Circle fx:id="fromAnchor" fill="WHITE" layoutY="50.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="flow-anchor" />
+   </children>
+</Group>

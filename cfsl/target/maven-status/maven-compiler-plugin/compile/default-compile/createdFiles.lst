@@ -1,0 +1,15 @@
+nl\utwente\cs\fmt\cfsl\gui\util\TextFieldAutoSizer.class
+nl\utwente\cs\fmt\cfsl\Symbol.class
+nl\utwente\cs\fmt\cfsl\gui\Controller.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasController.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\ase\ASEController.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasElementController$1.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasController$1.class
+nl\utwente\cs\fmt\cfsl\gui\main\MainController.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\flow\FlowController.class
+nl\utwente\cs\fmt\cfsl\gui\main\toolselector\ToolSelectorController.class
+nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController$1.class
+nl\utwente\cs\fmt\cfsl\gui\util\Utils.class
+nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController.class
+nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasElementController.class
+nl\utwente\cs\fmt\cfsl\App.class
