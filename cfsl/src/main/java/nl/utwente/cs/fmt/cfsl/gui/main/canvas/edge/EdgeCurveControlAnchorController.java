@@ -6,7 +6,8 @@
 package nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge;
 
 /**
- * An edge anchor that acts as the control point of the edge's Bezier curve.
+ * The controller for an edge anchor that acts as the control point of the 
+ * edge's Bezier curve.
  * 
  * @author Richard
  */

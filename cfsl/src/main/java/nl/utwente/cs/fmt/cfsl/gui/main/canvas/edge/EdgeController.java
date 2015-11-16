@@ -22,7 +22,8 @@ import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
- *
+ * Controller class for edges.
+ * 
  * @author Richard
  */
 public abstract class EdgeController<T> extends CanvasElementController<Group> {
@@ -34,6 +35,9 @@ public abstract class EdgeController<T> extends CanvasElementController<Group> {
     protected final EdgeCurveControlAnchorController controlAnchor = new EdgeCurveControlAnchorController(this);
     protected final EdgeCurveControlLineController controlLine = new EdgeCurveControlLineController(controlAnchor);
     
+    /**
+     * Creates a new EdgeController.
+     */
     public EdgeController() {
         TactilePane.setDraggable(getView(), false);
         

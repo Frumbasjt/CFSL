@@ -53,29 +53,12 @@
     -fx-padding: 0;
 }
 
-.text-area.minimal {
-    -fx-background-color: white;
-    -fx-padding: 0;
-}
-
-.text-area.minimal * {
-    -fx-background-color: white;
-}
-
-.text-area.minimal *.text {
-    -fx-text-alignment: center;
-}
-
-.text-area.minimal .scroll-bar {
-    visibility: collapse;
-}
-
-.text-area.minimal .scroll-bar * {
-    -fx-padding: 0;
-}
-
 .edge-control-line {
     -fx-stroke: grey;
     -fx-stroke-width: 2;
     -fx-stroke-dash-array: 5 5;
+}
+
+.text-field, .label {
+    -fx-font-size: 16px;
 }

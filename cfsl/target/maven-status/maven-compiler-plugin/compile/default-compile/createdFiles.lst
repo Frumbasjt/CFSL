@@ -8,7 +8,6 @@ nl\utwente\cs\fmt\cfsl\gui\main\canvas\edge\EdgeCurveControlAnchorController.cla
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController$1.class
 nl\utwente\cs\fmt\cfsl\gui\util\Utils.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\edge\EdgeCurveControlLineController.class
-nl\utwente\cs\fmt\cfsl\gui\util\TextAreaAutoSizer.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\node\NodeController.class
 nl\utwente\cs\fmt\cfsl\gui\Controller.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasController.class

@@ -136,4 +136,9 @@ public class CanvasController extends Controller<StackPane> {
         canvas.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
         canvas.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
     }
+    
+    @FXML
+    void canvasClicked(MouseEvent event) {
+        setSelectedElement(null);
+    }
 }
