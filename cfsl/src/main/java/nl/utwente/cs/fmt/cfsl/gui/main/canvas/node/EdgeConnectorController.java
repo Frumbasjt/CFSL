@@ -9,7 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgeAnchorController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgeCurvePositionAnchorController;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -24,7 +24,7 @@ public class EdgeConnectorController extends Controller<Circle> {
         
         TactilePane.setOnProximityEntered(getView(), e -> { 
             Controller controller = Controller.getController(e.getOther());
-            if (controller instanceof EdgeAnchorController) {
+            if (controller instanceof EdgeCurvePositionAnchorController) {
                 getView().setFill(Color.GREEN);
             }
         });
@@ -32,7 +32,7 @@ public class EdgeConnectorController extends Controller<Circle> {
         TactilePane.setOnProximityLeft(getView(), e -> { 
             for (Node node: TactilePane.getNodesInProximity(getView())) {
                 Controller controller = Controller.getController(node);
-                if (controller != null && controller instanceof EdgeAnchorController) {
+                if (controller != null && controller instanceof EdgeCurvePositionAnchorController) {
                     return;
                 }
             }

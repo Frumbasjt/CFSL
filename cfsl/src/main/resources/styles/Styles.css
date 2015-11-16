@@ -73,3 +73,9 @@
 .text-area.minimal .scroll-bar * {
     -fx-padding: 0;
 }
+
+.edge-control-line {
+    -fx-stroke: grey;
+    -fx-stroke-width: 2;
+    -fx-stroke-dash-array: 5 5;
+}

@@ -10,8 +10,6 @@
 
 <Group fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Line fx:id="transparentLine" endX="150.0" startY="50.0" stroke="TRANSPARENT" strokeWidth="25.0" />
-      <Line fx:id="line" endX="150.0" startY="50.0" />
       <Pane fx:id="headWrapper" layoutX="145.0" layoutY="-10.0" prefHeight="20.0" prefWidth="10.0" rotate="70.5">
          <children>
             <Polygon layoutX="5.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE">
@@ -33,5 +31,6 @@
             <DropShadow color="WHITE" spread="0.88" />
          </effect>
       </Label>
+      <CubicCurve fx:id="curve" controlX1="100.0" controlX2="50.0" controlY1="17.0" controlY2="33.0" endX="150.0" fill="#ffffff00" startY="50.0" stroke="BLACK" />
    </children>
 </Group>
