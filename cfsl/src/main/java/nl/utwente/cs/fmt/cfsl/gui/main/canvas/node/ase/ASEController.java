@@ -5,23 +5,22 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.ase;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.gui.util.TextAreaAutoSizer;
+import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
 
 /**
  *
  * @author Richard
  */
 public class ASEController extends NodeController {
-    @FXML
-    private TextArea textInput;
 
+    private final MultiLineTextInputController textInput;
+    
     public ASEController() {
-        TextAreaAutoSizer.addAutoSizeListener(textInput, 30);
-        textInput.setCache(false);
+        textInput = new MultiLineTextInputController("Abstract Syntax Element");
+        ((StackPane)getView()).getChildren().add(textInput.getView());
     }
     
     @Override

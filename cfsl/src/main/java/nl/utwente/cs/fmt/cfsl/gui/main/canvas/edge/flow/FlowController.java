@@ -5,7 +5,9 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.flow;
 
+import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgeController;
 
 /**
@@ -14,5 +16,13 @@ import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgeController;
  */
 public class FlowController extends EdgeController<Group> {
 
+    @FXML Label label;
+    
+    public FlowController() {
+        // Center text input
+        label.setSnapToPixel(true);
+        label.layoutXProperty().bind(label.widthProperty().divide(-2).add(line.endXProperty().add(line.startXProperty()).divide(2)));
+        label.layoutYProperty().bind(label.heightProperty().divide(-2).add(line.endYProperty().add(line.startYProperty()).divide(2)));
+    }
     
 }

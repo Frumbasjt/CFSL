@@ -31,7 +31,9 @@ public class MainController extends Controller<BorderPane>{
     private final ToolSelectorController toolSelectorController = new ToolSelectorController();
     
     private MainController() {
-        canvasContainer.setContent(new Group(canvasController.getView()));
+        Group canvasWrapper = new Group(canvasController.getView());
+        canvasWrapper.setCache(false);
+        canvasContainer.setContent(canvasWrapper);
         getView().setLeft(toolSelectorController.getView());
     }
     

@@ -28,10 +28,10 @@
             </Polygon>
          </children>
       </Pane>
-      <TextArea fx:id="textInput" layoutX="50.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="50.0" prefColumnCount="3" prefRowCount="1" promptText="flow" styleClass="minimal">
+      <Label fx:id="label" layoutX="61.0" layoutY="17.0" text="flow">
          <effect>
-            <DropShadow color="WHITE" spread="0.91" />
+            <DropShadow color="WHITE" spread="0.88" />
          </effect>
-      </TextArea>
+      </Label>
    </children>
 </Group>

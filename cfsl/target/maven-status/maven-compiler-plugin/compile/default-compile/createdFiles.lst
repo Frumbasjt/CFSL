@@ -11,7 +11,9 @@ nl\utwente\cs\fmt\cfsl\gui\Controller.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasController.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\CanvasController$1.class
 nl\utwente\cs\fmt\cfsl\gui\main\MainController.class
+nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController$1.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\edge\flow\FlowController.class
+nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\ToolSelectorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController.class
 nl\utwente\cs\fmt\cfsl\gui\main\canvas\edge\EdgeAnchorController.class

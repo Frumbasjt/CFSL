@@ -11,30 +11,27 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.control.TextArea;
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasElementController;
-import nl.utwente.cs.fmt.cfsl.gui.util.TextAreaAutoSizer;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
  *
  * @author Richard
  */
-public abstract class EdgeController<T> extends CanvasElementController<T> {
+public abstract class EdgeController<T> extends CanvasElementController<Group> {
     @FXML protected Line line;
     @FXML protected Pane headWrapper;
     @FXML protected Line transparentLine;
-    @FXML protected TextArea textInput;
     
     protected final EdgeAnchorController startAnchor = new EdgeAnchorController(this);
     protected final EdgeAnchorController endAnchor = new EdgeAnchorController(this);
     
     public EdgeController() {
         TactilePane.setDraggable(getView(), false);
-        TextAreaAutoSizer.addAutoSizeListener(textInput, 30);
         
         // Bind transparent line's location to visible line
         transparentLine.startXProperty().bind(line.startXProperty());
@@ -52,11 +49,6 @@ public abstract class EdgeController<T> extends CanvasElementController<T> {
             double deltaY = line.getEndY() - line.getStartY();
             return Math.toDegrees(-Math.atan2(deltaX, deltaY)) + 180;
         }, line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty()));
-        
-        // Center text input
-        textInput.setSnapToPixel(true);
-        textInput.layoutXProperty().bind(textInput.widthProperty().divide(-2).add(line.endXProperty().add(line.startXProperty()).divide(2)));
-        textInput.layoutYProperty().bind(textInput.heightProperty().divide(-2).add(line.endYProperty().add(line.startYProperty()).divide(2)));
     }
     
     // CANVASELEMENTCONTROLLER IMPLEMENTATION
