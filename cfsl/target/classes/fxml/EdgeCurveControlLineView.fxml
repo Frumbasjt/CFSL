@@ -8,4 +8,4 @@
 <?import javafx.scene.layout.*?>
 
 
-<Line fx:id="root" endX="100.0" startX="-100.0" styleClass="edge-control-line" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<Line fx:id="root" endX="100.0" mouseTransparent="true" startX="-100.0" styleClass="edge-control-line" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />

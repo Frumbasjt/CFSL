@@ -67,6 +67,7 @@ public class MultiLineTextInputController extends Controller<VBox> {
                 newInput.requestFocus();
                 break;
             case LEFT:
+            case BACK_SPACE:
                 if (tf.getCaretPosition() == 0) {
                     index = getView().getChildren().indexOf(tf);
                     if (index > 0) {

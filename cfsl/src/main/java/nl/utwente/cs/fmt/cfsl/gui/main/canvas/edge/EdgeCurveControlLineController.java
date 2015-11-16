@@ -10,7 +10,9 @@ import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
- *
+ * The controller for a line between an edge curve control anchor and an edge's 
+ * curve.
+ * 
  * @author Richard
  */
 public class EdgeCurveControlLineController extends Controller<Line> {

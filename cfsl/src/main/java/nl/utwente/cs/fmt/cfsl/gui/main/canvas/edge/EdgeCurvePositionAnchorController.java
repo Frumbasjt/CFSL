@@ -17,11 +17,20 @@ import nl.utwente.ewi.caes.tactilefx.control.Anchor;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
- *
+ * The controller for an edge anchor that manipulates either the start or end
+ * position of an edge. When dropped on an EdgeConnector, it may connect its
+ * edge with the EdgeConnector's Node.
+ * 
  * @author Richard
  */
 public class EdgeCurvePositionAnchorController extends EdgeAnchorController {
     
+    /**
+     * Creates a new EdgeCurvePositionAnchorController that manipulates the given
+     * edge.
+     * 
+     * @param edge the edge this anchor manipulates. May not be null.
+     */
     public EdgeCurvePositionAnchorController(EdgeController edge) {
         super(edge);
         
@@ -32,6 +41,10 @@ public class EdgeCurvePositionAnchorController extends EdgeAnchorController {
     
     // PROPERTIES
     
+    /**
+     * The controller for the EdgeConnector that this position anchor is 
+     * connected to, if any.
+     */
     private final ReadOnlyObjectWrapper<EdgeConnectorController> connector = new ReadOnlyObjectWrapper<>();
 
     public EdgeConnectorController getConnector() {

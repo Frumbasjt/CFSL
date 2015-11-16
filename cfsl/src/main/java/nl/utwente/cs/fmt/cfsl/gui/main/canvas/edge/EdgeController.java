@@ -7,14 +7,18 @@ package nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge;
 
 import java.util.List;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.QuadCurve;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasElementController;
+import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -22,34 +26,40 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  * @author Richard
  */
 public abstract class EdgeController<T> extends CanvasElementController<Group> {
-    @FXML protected CubicCurve curve;
+    @FXML protected QuadCurve curve;
     @FXML protected Pane headWrapper;
     
     protected final EdgeCurvePositionAnchorController startAnchor = new EdgeCurvePositionAnchorController(this);
     protected final EdgeCurvePositionAnchorController endAnchor = new EdgeCurvePositionAnchorController(this);
-    protected final EdgeCurveControlAnchorController control1Anchor = new EdgeCurveControlAnchorController(this);
-    protected final EdgeCurveControlAnchorController control2Anchor = new EdgeCurveControlAnchorController(this);
-    protected final EdgeCurveControlLineController control1Line = new EdgeCurveControlLineController(control1Anchor);
-    protected final EdgeCurveControlLineController control2Line = new EdgeCurveControlLineController(control2Anchor);
+    protected final EdgeCurveControlAnchorController controlAnchor = new EdgeCurveControlAnchorController(this);
+    protected final EdgeCurveControlLineController controlLine = new EdgeCurveControlLineController(controlAnchor);
     
     public EdgeController() {
         TactilePane.setDraggable(getView(), false);
         
-        // Bind head's location to line's end
+        // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
         headWrapper.layoutYProperty().bind(curve.endYProperty().subtract(headWrapper.heightProperty().divide(2)));
         
-        // Rotate edge head with line
+        // Rotate edge head with curve
         headWrapper.rotateProperty().bind(Bindings.createDoubleBinding(() -> {
             double size = Math.max(curve.getBoundsInLocal().getWidth(), curve.getBoundsInLocal().getHeight());
-            double scale = size / 2d;
-            Point2D tan = evalDt(curve, 1).normalize().multiply(scale);
+            double scale = size / 4d;
+            Point2D tan = Utils.evalDt(curve, 1).normalize().multiply(scale);
             return Math.toDegrees(Math.atan2( tan.getY(), tan.getX())) + 90;
         }, curve.startXProperty(), curve.startYProperty(), curve.endXProperty(), curve.endYProperty(),
-        curve.controlX1Property(), curve.controlX2Property(), curve.controlY1Property(), curve.controlY2Property()));
+        curve.controlXProperty(), curve.controlYProperty()));
+        
+        // Recalculate middle of the curve when curve changes
+        curve.startXProperty().addListener(o -> updateMiddle());
+        curve.startYProperty().addListener(o -> updateMiddle());
+        curve.endXProperty().addListener(o -> updateMiddle());
+        curve.endYProperty().addListener(o -> updateMiddle());
+        curve.controlXProperty().addListener(o -> updateMiddle());
+        curve.controlYProperty().addListener(o -> updateMiddle());
     }
     
-    // CANVASELEMENTCONTROLLER IMPLEMENTATION
+    // CANVAS_ELEMENT_CONTROLLER IMPLEMENTATION
     
     @Override
     public void initCanvas(CanvasController canvas) {
@@ -57,18 +67,15 @@ public abstract class EdgeController<T> extends CanvasElementController<Group> {
         List canvasViewChildren = canvas.getCanvasView().getChildren();
         canvasViewChildren.add(startAnchor.getView());
         canvasViewChildren.add(endAnchor.getView());
-        canvasViewChildren.add(control1Anchor.getView());
-        canvasViewChildren.add(control2Anchor.getView());
-        canvasViewChildren.add(control1Line.getView());
-        canvasViewChildren.add(control2Line.getView());
+        canvasViewChildren.add(controlAnchor.getView());
+        canvasViewChildren.add(controlLine.getView());
         
         // Relocate anchors
         double layoutX = getView().getLayoutX();
         double layoutY = getView().getLayoutY();
         startAnchor.getView().relocate(layoutX + curve.getStartX(), layoutY + curve.getStartY());
         endAnchor.getView().relocate(layoutX + curve.getEndX(), layoutY + curve.getEndY());
-        control1Anchor.getView().relocate(layoutX + curve.getControlX1(), layoutY + curve.getControlY1());
-        control2Anchor.getView().relocate(layoutX + curve.getControlX2(), layoutY + curve.getControlY2());
+        controlAnchor.getView().relocate(layoutX + curve.getControlX(), layoutY + curve.getControlY());
         
         // Relocate entire group to top left of canvas to compensate for bindings
         Bounds b = getView().getBoundsInLocal();
@@ -81,61 +88,62 @@ public abstract class EdgeController<T> extends CanvasElementController<Group> {
         curve.endYProperty().bind(endAnchor.getView().layoutYProperty());
         
         // Bind curve control to position of control anchors
-        curve.controlX1Property().bind(control1Anchor.getView().layoutXProperty());
-        curve.controlY1Property().bind(control1Anchor.getView().layoutYProperty());
-        curve.controlX2Property().bind(control2Anchor.getView().layoutXProperty());
-        curve.controlY2Property().bind(control2Anchor.getView().layoutYProperty());
+        curve.controlXProperty().bind(controlAnchor.getView().layoutXProperty());
+        curve.controlYProperty().bind(controlAnchor.getView().layoutYProperty());
         
         // Bind control lines between control anchors and curve
-        control1Line.getView().startXProperty().bind(curve.controlX1Property());
-        control1Line.getView().startYProperty().bind(curve.controlY1Property());
-        control1Line.getView().endXProperty().bind(curve.startXProperty());
-        control1Line.getView().endYProperty().bind(curve.startYProperty());
-        control2Line.getView().startXProperty().bind(curve.controlX2Property());
-        control2Line.getView().startYProperty().bind(curve.controlY2Property());
-        control2Line.getView().endXProperty().bind(curve.endXProperty());
-        control2Line.getView().endYProperty().bind(curve.endYProperty());
+        controlLine.getView().startXProperty().bind(curve.controlXProperty());
+        controlLine.getView().startYProperty().bind(curve.controlYProperty());
+        controlLine.getView().endXProperty().bind(Bindings.createDoubleBinding(() -> { 
+            return getMiddle().getX();
+        }, middleProperty()));
+        controlLine.getView().endYProperty().bind(Bindings.createDoubleBinding(() -> { 
+            return getMiddle().getY();
+        }, middleProperty()));
+        
+        // Move control anchor when position anchors move
+        startAnchor.getView().layoutXProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            double deltaX = (double) newValue - (double) oldValue;
+            controlAnchor.getView().setLayoutX(controlAnchor.getView().getLayoutX() + deltaX / 2);
+        });
+        startAnchor.getView().layoutYProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            double deltaY = (double) newValue - (double) oldValue;
+            controlAnchor.getView().setLayoutY(controlAnchor.getView().getLayoutY() + deltaY / 2);
+        });
+        endAnchor.getView().layoutXProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            double deltaX = (double) newValue - (double) oldValue;
+            controlAnchor.getView().setLayoutX(controlAnchor.getView().getLayoutX() + deltaX / 2);
+        });
+        endAnchor.getView().layoutYProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+            double deltaY = (double) newValue - (double) oldValue;
+            controlAnchor.getView().setLayoutY(controlAnchor.getView().getLayoutY() + deltaY / 2);
+        });
         
         // Track position anchors
         canvas.getCanvasView().getActiveNodes().add(startAnchor.getView());
         canvas.getCanvasView().getActiveNodes().add(endAnchor.getView());
     }
     
-    // HELP METHODS
+    // PROPERTIES
     
     /**
-     * Evaluate the cubic curve at a parameter 0<=t<=1, returns a Point2D
-     * @param c the CubicCurve 
-     * @param t param between 0 and 1
-     * @return a Point2D 
+     * The coordinates of the point of the Bezier curve for t = 0.5
      */
-    protected final Point2D eval(CubicCurve c, float t){
-        Point2D p=new Point2D(Math.pow(1-t,3)*c.getStartX()+
-                3*t*Math.pow(1-t,2)*c.getControlX1()+
-                3*(1-t)*t*t*c.getControlX2()+
-                Math.pow(t, 3)*c.getEndX(),
-                Math.pow(1-t,3)*c.getStartY()+
-                3*t*Math.pow(1-t, 2)*c.getControlY1()+
-                3*(1-t)*t*t*c.getControlY2()+
-                Math.pow(t, 3)*c.getEndY());
-        return p;
+    private final ObjectProperty<Point2D> middle = new ReadOnlyObjectWrapper<>();
+
+    public Point2D getMiddle() {
+        return middle.get();
     }
 
-    /**
-     * Evaluate the tangent of the cubic curve at a parameter 0<=t<=1, returns a Point2D
-     * @param c the CubicCurve 
-     * @param t param between 0 and 1
-     * @return a Point2D 
-     */
-    protected final Point2D evalDt(CubicCurve c, float t){
-        Point2D p=new Point2D(-3*Math.pow(1-t,2)*c.getStartX()+
-                3*(Math.pow(1-t, 2)-2*t*(1-t))*c.getControlX1()+
-                3*((1-t)*2*t-t*t)*c.getControlX2()+
-                3*Math.pow(t, 2)*c.getEndX(),
-                -3*Math.pow(1-t,2)*c.getStartY()+
-                3*(Math.pow(1-t, 2)-2*t*(1-t))*c.getControlY1()+
-                3*((1-t)*2*t-t*t)*c.getControlY2()+
-                3*Math.pow(t, 2)*c.getEndY());
-        return p;
+    public ObjectProperty middleProperty() {
+        return middle;
     }
+
+    // HELPER METHODS
+    
+    private void updateMiddle() {
+        middle.set(Utils.eval(curve, 0.5f));
+    }
+    
+    
 }
