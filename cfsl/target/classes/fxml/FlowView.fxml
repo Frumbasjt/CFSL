@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,16 +10,17 @@
 
 <Group fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Line fx:id="transparentLine" endX="150.0" startY="50.0" stroke="TRANSPARENT" strokeWidth="25.0" />
       <Line fx:id="line" endX="150.0" startY="50.0" />
-      <Pane fx:id="arrowWrapper" layoutX="140.0" layoutY="-20.0" prefHeight="40.0" prefWidth="20.0" rotate="70.5">
+      <Pane fx:id="headWrapper" layoutX="145.0" layoutY="-10.0" prefHeight="20.0" prefWidth="10.0" rotate="70.5">
          <children>
-            <Polygon fill="WHITE" layoutX="10.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon layoutX="5.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE">
               <points>
-                <Double fx:value="-10.0" />
-                <Double fx:value="20.0" />
-                
+                <Double fx:value="-5.0" />
                 <Double fx:value="10.0" />
-                <Double fx:value="20.0" />
+                
+                <Double fx:value="5.0" />
+                <Double fx:value="10.0" />
                 
                 <Double fx:value="0.0" />
                 <Double fx:value="0.0" />
@@ -26,7 +28,10 @@
             </Polygon>
          </children>
       </Pane>
-      <Circle fx:id="toAnchor" fill="WHITE" layoutX="150.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="flow-anchor" />
-      <Circle fx:id="fromAnchor" fill="WHITE" layoutY="50.0" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="flow-anchor" />
+      <TextArea fx:id="textInput" layoutX="50.0" layoutY="13.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="50.0" prefColumnCount="3" prefRowCount="1" promptText="flow" styleClass="minimal">
+         <effect>
+            <DropShadow color="WHITE" spread="0.91" />
+         </effect>
+      </TextArea>
    </children>
 </Group>

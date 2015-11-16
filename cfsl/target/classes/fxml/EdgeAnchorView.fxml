@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Circle fx:id="root" fill="WHITE" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="edge-anchor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />

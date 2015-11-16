@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nl.utwente.cs.fmt.cfsl.gui.main.canvas.flow;
+package nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.flow;
 
-import javafx.scene.shape.Circle;
-import nl.utwente.cs.fmt.cfsl.gui.Controller;
+import javafx.scene.Group;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgeController;
 
 /**
  *
  * @author Richard
  */
-public class FlowAnchorController extends Controller<Circle> {
+public class FlowController extends EdgeController<Group> {
+
     
 }

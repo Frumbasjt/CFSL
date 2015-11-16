@@ -16,6 +16,8 @@ import javafx.scene.Node;
  * @param <T> The type of Node the Controller controls
  */
 public abstract class Controller<T extends Node> {
+    private static final String CONTROLLER_PROPERTY_KEY = "nl.utwente.cs.fmt.cfsl.controller";
+    
     @FXML private T root;
     
     /**
@@ -26,6 +28,7 @@ public abstract class Controller<T extends Node> {
         String viewName = getClass().getSimpleName().substring(0, simpleName.length() - 10);
 
         loadFXML(viewName + "View");
+        root.getProperties().put(CONTROLLER_PROPERTY_KEY, this);
     }
     
     /**
@@ -36,6 +39,7 @@ public abstract class Controller<T extends Node> {
      */
     public Controller(String fxmlName) {
         loadFXML(fxmlName);
+        root.getProperties().put(CONTROLLER_PROPERTY_KEY, this);
     }
     
     /**
@@ -45,6 +49,7 @@ public abstract class Controller<T extends Node> {
      */
     public Controller(T view) {
         root = view;
+        root.getProperties().put(CONTROLLER_PROPERTY_KEY, this);
     }
     
     /**
@@ -70,5 +75,15 @@ public abstract class Controller<T extends Node> {
      */
     public T getView() {
         return root;
+    }
+    
+    /**
+     * Returns the Controller of the given View.
+     * 
+     * @param view the View
+     * @return the Controller of the given View
+     */
+    public static Controller getController(Node view) {
+        return (Controller) view.getProperties().get(CONTROLLER_PROPERTY_KEY);
     }
 }

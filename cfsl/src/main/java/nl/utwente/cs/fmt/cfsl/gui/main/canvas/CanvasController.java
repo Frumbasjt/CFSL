@@ -5,6 +5,8 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.canvas;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -13,8 +15,9 @@ import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.ase.ASEController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.ase.ASEController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.NodeController;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -26,12 +29,35 @@ public class CanvasController extends Controller<StackPane> {
     private TactilePane canvas;
     
     public CanvasController() {
+        canvas.setProximityThreshold(10);
     }
     
     // PROPERTIES
     
     public TactilePane getCanvasView() {
         return canvas;
+    }
+    
+    private final ObjectProperty<CanvasElementController> selectedElement = new SimpleObjectProperty<CanvasElementController>() {
+        @Override
+        public void set(CanvasElementController value) {
+            if (get() != value) {
+                if (get() != null) get().setSelected(false);
+                super.set(value);
+            }
+        }
+    };
+
+    public CanvasElementController getSelectedElement() {
+        return selectedElement.get();
+    }
+
+    public void setSelectedElement(CanvasElementController value) {
+        selectedElement.set(value);
+    }
+
+    public ObjectProperty selectedElementProperty() {
+        return selectedElement;
     }
     
     // PUBLIC METHODS
@@ -65,8 +91,16 @@ public class CanvasController extends Controller<StackPane> {
         canvas.setPrefHeight(Math.max(canvas.getHeight(), minBounds.getMaxY()));
         
         // Initialise canvas element
-        canvasElement.setPreview(false);
         canvasElement.initCanvas(this);
+    }
+    
+    public void showEdgeConnectors(boolean show) {
+        for (Node child: canvas.getChildren()) {
+            Controller controller = Controller.getController(child);
+            if (controller != null && controller instanceof NodeController) {
+                ((NodeController) controller).showEdgeConnectors(show);
+            }
+        }
     }
     
     // EVENT HANDLING

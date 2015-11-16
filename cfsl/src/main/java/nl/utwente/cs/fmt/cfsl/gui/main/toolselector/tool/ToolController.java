@@ -14,8 +14,8 @@ import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasElementController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.ase.ASEController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.ase.ASEController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.flow.FlowController;
 
 /**
  *
@@ -45,7 +45,6 @@ public class ToolController extends Controller<StackPane> {
                 break;
         }
         
-        canvasElement.setPreview(true);
         canvasElement.getView().setDisable(true);
         getView().getChildren().add(canvasElement.getView());
     }
