@@ -22,8 +22,6 @@ public class EdgeCurveControlAnchorController extends EdgeAnchorController {
     public EdgeCurveControlAnchorController(EdgeController edge) {
         super(edge);
         
-        edge.selectedProperty().addListener(o -> { 
-            setVisible(edge.isSelected());
-        });
+        visibleProperty().bind(edge.selectedProperty());
     }
 }

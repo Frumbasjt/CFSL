@@ -10,7 +10,7 @@
 
 <StackPane fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TactilePane styleClass="canvas-view" bordersCollide="true"  fx:id="canvas" onMouseClicked="#canvasClicked" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" StackPane.alignment="TOP_LEFT" />
+      <TactilePane styleClass="canvas-view" bordersCollide="true"  fx:id="canvas" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" StackPane.alignment="TOP_LEFT" />
       <Rectangle fx:id="verticalAnchor" fill="WHITE" height="5.0" onMouseDragged="#verticalAnchorMouseDragged" onMousePressed="#anchorMousePressed" stroke="BLACK" strokeType="OUTSIDE" styleClass="vertical-anchor" translateY="7.0" width="5.0" StackPane.alignment="BOTTOM_CENTER" />
       <Rectangle fx:id="horizontalAnchor" fill="WHITE" height="5.0" layoutX="308.0" layoutY="404.0" onMouseDragged="#horizontalAnchorMouseDragged" onMousePressed="#anchorMousePressed" stroke="BLACK" strokeType="OUTSIDE" styleClass="horizontal-anchor" translateX="7.0" width="5.0" StackPane.alignment="CENTER_RIGHT" />
       <Rectangle fx:id="diagonalAnchor" fill="WHITE" height="5.0" layoutX="308.0" layoutY="208.0" onMouseDragged="#diagonalAnchorMouseDragged" onMousePressed="#anchorMousePressed" stroke="BLACK" strokeType="OUTSIDE" styleClass="diagonal-anchor" translateX="7.0" translateY="7.0" width="5.0" StackPane.alignment="BOTTOM_RIGHT" />

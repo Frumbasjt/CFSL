@@ -38,6 +38,9 @@ public class CanvasController extends Controller<StackPane> {
         return canvas;
     }
     
+    /**
+     * The CanvasElement that is currently selected.
+     */
     private final ObjectProperty<CanvasElementController> selectedElement = new SimpleObjectProperty<CanvasElementController>() {
         @Override
         public void set(CanvasElementController value) {
@@ -135,10 +138,5 @@ public class CanvasController extends Controller<StackPane> {
         Bounds minBounds = Utils.getChildrenBounds(canvas);
         canvas.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
         canvas.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
-    }
-    
-    @FXML
-    void canvasClicked(MouseEvent event) {
-        setSelectedElement(null);
     }
 }

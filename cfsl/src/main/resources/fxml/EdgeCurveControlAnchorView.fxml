@@ -8,4 +8,9 @@
 <?import javafx.scene.layout.*?>
 
 
-<Circle fx:id="root" fill="WHITE" radius="5.0" stroke="BLACK" strokeType="INSIDE" styleClass="edge-anchor control" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" />
+<Circle fx:id="root" fill="WHITE" radius="5.0" stroke="BLACK" strokeType="INSIDE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <styleClass>
+      <String fx:value="edge-anchor" />
+      <String fx:value="control" />
+   </styleClass>
+</Circle>

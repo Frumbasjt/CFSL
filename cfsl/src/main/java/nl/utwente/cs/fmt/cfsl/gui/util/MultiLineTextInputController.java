@@ -5,15 +5,22 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.util;
 
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 
 /**
- *
+ * A multi line text input control. New rows are automatically added each time 
+ * the user presses enter, and removed when empty and lost focus. Each line
+ * resizes automatically to accommodate text width.
+ * 
  * @author Richard
  */
 public class MultiLineTextInputController extends Controller<VBox> {
@@ -27,8 +34,24 @@ public class MultiLineTextInputController extends Controller<VBox> {
     
     public MultiLineTextInputController(String initialText) {
         firstInput.setText(initialText);
+        firstInput.setContextMenu(new ContextMenu());
         addEventHandlers(firstInput);
         TextFieldAutoSizer.addAutoSizeListener(firstInput, 30);
+    }
+    
+    // PROPERTIES
+    
+    /**
+     * The textual content of this control.
+     */
+    private final ReadOnlyStringWrapper totalText = new ReadOnlyStringWrapper();
+
+    public String getTotalText() {
+        return totalText.get();
+    }
+
+    public ReadOnlyStringProperty totalTextProperty() {
+        return totalText.getReadOnlyProperty();
     }
     
     // PUBLIC METHODS
@@ -41,6 +64,7 @@ public class MultiLineTextInputController extends Controller<VBox> {
     
     private TextField newInput() {
         TextField result = new TextField();
+        result.setContextMenu(new ContextMenu());
         result.setAlignment(Pos.CENTER);
         result.getStyleClass().add("minimal");
         TextFieldAutoSizer.addAutoSizeListener(result, 30);
@@ -49,15 +73,26 @@ public class MultiLineTextInputController extends Controller<VBox> {
     }
     
     private void addEventHandlers(TextField tf) {
-        tf.addEventFilter(KeyEvent.KEY_PRESSED, e -> handleKeyPress(tf, e));
+        tf.addEventFilter(KeyEvent.KEY_PRESSED, e -> onKeyPressed(tf, e));
         tf.focusedProperty().addListener(o -> { 
-            if (!tf.isFocused()) handleLostFocus(tf);
+            if (!tf.isFocused()) onLostFocus(tf);
+        });
+        tf.textProperty().addListener(o -> {
+            StringBuilder sb = new StringBuilder();
+            for (Node node : getView().getChildren()) {
+                if (node instanceof TextField) {
+                    sb.append(((TextField) node).getText());
+                    sb.append("\n");
+                }
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            this.totalText.set(sb.toString());
         });
     }
     
     // EVENT HANDLING
     
-    private void handleKeyPress(TextField tf, KeyEvent e) {
+    private void onKeyPressed(TextField tf, KeyEvent e) {
         int index;
         switch (e.getCode()) {
             case ENTER:
@@ -90,7 +125,7 @@ public class MultiLineTextInputController extends Controller<VBox> {
         }
     }
     
-    private void handleLostFocus(TextField tf) {
+    private void onLostFocus(TextField tf) {
         if (tf != firstInput) {
             if (tf.getText().isEmpty()) {
                 getView().getChildren().remove(tf);

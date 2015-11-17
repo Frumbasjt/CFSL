@@ -8,11 +8,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Group fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Group fx:id="root" styleClass="edge" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="headWrapper" layoutX="145.0" layoutY="-10.0" prefHeight="20.0" prefWidth="10.0" rotate="70.5">
          <children>
-            <Polygon layoutX="5.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE">
+            <Polygon layoutX="5.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" styleClass="edge-head">
               <points>
                 <Double fx:value="-5.0" />
                 <Double fx:value="10.0" />
@@ -26,11 +26,7 @@
             </Polygon>
          </children>
       </Pane>
-      <Label fx:id="label" layoutX="61.0" layoutY="17.0" text="flow">
-         <effect>
-            <DropShadow color="WHITE" spread="0.88" />
-         </effect>
-      </Label>
-      <QuadCurve fx:id="curve" controlX="75.0" controlY="25.0" endX="150.0" fill="#ffffff00" startY="50.0" stroke="BLACK" />
+      <QuadCurve fx:id="curve" controlX="75.0" controlY="25.0" endX="150.0" fill="#ffffff00" startY="50.0" stroke="BLACK" styleClass="edge-curve" />
+      <Label fx:id="label" layoutX="60.0" layoutY="13.0" text="flow" />
    </children>
 </Group>

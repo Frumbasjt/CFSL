@@ -25,7 +25,7 @@ public class EdgeCurveControlLineController extends Controller<Line> {
         
         anchor.visibleProperty().addListener(o -> { 
             if (anchor.isVisible()) {
-                getView().setOpacity(0.6);
+                getView().setOpacity(1);
             } else {
                 getView().setOpacity(0);
             }

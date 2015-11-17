@@ -23,20 +23,24 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  * 
  * @author Richard
  */
-public class EdgeCurvePositionAnchorController extends EdgeAnchorController {
+public class EdgePositionAnchorController extends EdgeAnchorController {
+    private final EdgePosition position;
     
     /**
      * Creates a new EdgeCurvePositionAnchorController that manipulates the given
      * edge.
      * 
      * @param edge the edge this anchor manipulates. May not be null.
+     * @param position the position of the edge that this anchor manipulates
      */
-    public EdgeCurvePositionAnchorController(EdgeController edge) {
+    public EdgePositionAnchorController(EdgeController edge, EdgePosition position) {
         super(edge);
         
         edge.selectedProperty().addListener(o -> { 
             setVisible(edge.isSelected() || getConnector() == null);
         });
+        
+        this.position = position;
     }
     
     // PROPERTIES
@@ -53,6 +57,10 @@ public class EdgeCurvePositionAnchorController extends EdgeAnchorController {
 
     public ReadOnlyObjectProperty connectorProperty() {
         return connector.getReadOnlyProperty();
+    }
+    
+    public EdgePosition getPosition() {
+        return this.position;
     }
     
     // EVENT HANDLING
@@ -72,19 +80,40 @@ public class EdgeCurvePositionAnchorController extends EdgeAnchorController {
     @FXML
     void mousePressed(MouseEvent event) {
         MainController.getInstance().getCanvas().showEdgeConnectors(true);
-        this.connector.set(null);
+        if (getConnector() != null) {
+            getConnector().disconnect(this);
+            this.connector.set(null);
+        }
     }
     
     @FXML
     void mouseReleased(MouseEvent event) {
+        EdgeConnectorController rejectingConnector = null;
         for (Node node: TactilePane.getNodesInProximity(getView())) {
             Controller controller = Controller.getController(node);
             if (controller != null && controller instanceof EdgeConnectorController) {
-                TactilePane.setAnchor(getView(), new Anchor(node, 5, 5));
-                this.connector.set((EdgeConnectorController) controller);
-                setVisible(false);
+                EdgeConnectorController connector = (EdgeConnectorController) controller;
+                if (connector.connect(this)) {
+                    TactilePane.setAnchor(getView(), new Anchor(node, 5, 5));
+                    this.connector.set((EdgeConnectorController) controller);
+                    setVisible(false);
+                    rejectingConnector = null;
+                    break;
+                } else {
+                    rejectingConnector = connector;
+                }
             }
         }
+        if (rejectingConnector != null) {
+            TactilePane.moveAwayFrom(getView(), rejectingConnector.getNode().getView());
+        }
         MainController.getInstance().getCanvas().showEdgeConnectors(false);
+    }
+    
+    // NESTED ENUMS
+    
+    public static enum EdgePosition {
+        START,
+        END
     }
 }

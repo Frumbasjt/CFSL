@@ -30,7 +30,7 @@ public abstract class EdgeAnchorController extends Controller<Circle> {
         this.edge = edge;
         this.visible.addListener(o -> { 
             if (isVisible()) {
-                getView().setOpacity(0.6);
+                getView().setOpacity(1);
             } else {
                 getView().setOpacity(0);
             }

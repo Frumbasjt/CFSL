@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.QuadCurve;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
 import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasElementController;
+import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.EdgePositionAnchorController.EdgePosition;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
@@ -30,8 +31,8 @@ public abstract class EdgeController<T> extends CanvasElementController<Group> {
     @FXML protected QuadCurve curve;
     @FXML protected Pane headWrapper;
     
-    protected final EdgeCurvePositionAnchorController startAnchor = new EdgeCurvePositionAnchorController(this);
-    protected final EdgeCurvePositionAnchorController endAnchor = new EdgeCurvePositionAnchorController(this);
+    protected final EdgePositionAnchorController startAnchor = new EdgePositionAnchorController(this, EdgePosition.START);
+    protected final EdgePositionAnchorController endAnchor = new EdgePositionAnchorController(this, EdgePosition.END);
     protected final EdgeCurveControlAnchorController controlAnchor = new EdgeCurveControlAnchorController(this);
     protected final EdgeCurveControlLineController controlLine = new EdgeCurveControlLineController(controlAnchor);
     

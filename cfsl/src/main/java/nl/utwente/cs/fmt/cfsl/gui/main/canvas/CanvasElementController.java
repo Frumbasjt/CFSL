@@ -7,6 +7,7 @@ package nl.utwente.cs.fmt.cfsl.gui.main.canvas;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
@@ -18,8 +19,11 @@ import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
  */
 public abstract class CanvasElementController<T> extends Controller{
     
+    private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
+            
+    
     public CanvasElementController() {
-        getView().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed(e));
+        getView().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> mousePressed(e));
         
         selected.addListener(o -> { 
             System.out.println(this + ": " + isSelected());
@@ -28,7 +32,13 @@ public abstract class CanvasElementController<T> extends Controller{
     
     // PROPERTIES
     
-    private final BooleanProperty selected = new SimpleBooleanProperty();
+    private final BooleanProperty selected = new SimpleBooleanProperty() {
+        @Override
+        protected void invalidated() {
+            getView().pseudoClassStateChanged(SELECTED_PSEUDO_CLASS, get());
+            super.invalidated();
+        }
+    };
 
     public boolean isSelected() {
         return selected.get();
@@ -56,5 +66,6 @@ public abstract class CanvasElementController<T> extends Controller{
     private void mousePressed(MouseEvent event) {
         setSelected(true);
         MainController.getInstance().getCanvas().setSelectedElement(this);
+        event.consume();
     }
 }
