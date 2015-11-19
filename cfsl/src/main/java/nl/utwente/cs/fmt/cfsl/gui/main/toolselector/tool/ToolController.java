@@ -12,21 +12,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasElementController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.node.ase.ASEController;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.edge.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start.StartController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop.StopController;
 
 /**
  *
  * @author Richard
  */
 public class ToolController extends Controller<StackPane> {
-    @FXML
-    private StackPane root;
     
     private final Symbol symbol;
-    private final CanvasElementController canvasElement;
+    private final GraphElementController graphElement;
     
     public ToolController(Symbol symbol) {
         super();
@@ -35,18 +36,27 @@ public class ToolController extends Controller<StackPane> {
         
         switch (symbol) {
             case ABSTRACT_SYNTAX_ELEMENT:
-                canvasElement = new ASEController();
+                graphElement = new ASEController();
                 break;
             case FLOW:
-                canvasElement = new FlowController();
+                graphElement = new FlowController();
+                break;
+            case START:
+                graphElement = new StartController();
+                break;
+            case STOP:
+                graphElement = new StopController();
+                break;
+            case CHILD:
+                graphElement = new ChildController();
                 break;
             default:
-                canvasElement = null;
+                graphElement = null;
                 break;
         }
         
-        canvasElement.getView().setDisable(true);
-        getView().getChildren().add(canvasElement.getView());
+        graphElement.getView().setDisable(true);
+        getView().getChildren().add(graphElement.getView());
     }
     
     private double initX;
@@ -62,18 +72,18 @@ public class ToolController extends Controller<StackPane> {
     
     @FXML
     void mouseDragged(MouseEvent event) {
-        canvasElement.getView().setTranslateX(event.getSceneX() - initX);
-        canvasElement.getView().setTranslateY(event.getSceneY() - initY);
+        graphElement.getView().setTranslateX(event.getSceneX() - initX);
+        graphElement.getView().setTranslateY(event.getSceneY() - initY);
         
         event.consume();
     }
     
     @FXML
     void mouseReleased(MouseEvent event) {
-        canvasElement.getView().setTranslateX(0);
-        canvasElement.getView().setTranslateY(0);
+        graphElement.getView().setTranslateX(0);
+        graphElement.getView().setTranslateY(0);
         
-        CanvasController canvas = MainController.getInstance().getCanvas();
+        GraphController canvas = MainController.getInstance().getCanvas();
         Point2D point = canvas.getView().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
         if (canvas.getView().getBoundsInLocal().contains(point)) {
             canvas.addNewCanvasElement(symbol, point.getX(), point.getY());

@@ -10,7 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
-import nl.utwente.cs.fmt.cfsl.gui.main.canvas.CanvasController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.toolselector.ToolSelectorController;
 
 /**
@@ -27,7 +27,7 @@ public class MainController extends Controller<BorderPane>{
     @FXML
     private ScrollPane canvasContainer;
     
-    private final CanvasController canvasController = new CanvasController();
+    private final GraphController canvasController = new GraphController();
     private final ToolSelectorController toolSelectorController = new ToolSelectorController();
     
     private MainController() {
@@ -37,7 +37,7 @@ public class MainController extends Controller<BorderPane>{
         getView().setLeft(toolSelectorController.getView());
     }
     
-    public CanvasController getCanvas() {
+    public GraphController getCanvas() {
         return this.canvasController;
     }
 }

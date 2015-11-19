@@ -11,5 +11,11 @@ package nl.utwente.cs.fmt.cfsl;
  */
 public enum Symbol {
     ABSTRACT_SYNTAX_ELEMENT,
-    FLOW
+    START,
+    STOP,
+    FLOW,
+    CHILD,
+    BRANCH_EDGE,
+    ABORT,
+    BRANCH_NODE
 }

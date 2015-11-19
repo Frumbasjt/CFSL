@@ -17,6 +17,9 @@ import nl.utwente.cs.fmt.cfsl.gui.main.toolselector.tool.ToolController;
 public class ToolSelectorController extends Controller<VBox> {
     public ToolSelectorController() {
         getView().getChildren().add(new ToolController(Symbol.ABSTRACT_SYNTAX_ELEMENT).getView());
+        getView().getChildren().add(new ToolController(Symbol.CHILD).getView());
         getView().getChildren().add(new ToolController(Symbol.FLOW).getView());
+        getView().getChildren().add(new ToolController(Symbol.START).getView());
+        getView().getChildren().add(new ToolController(Symbol.STOP).getView());
     }
 }
