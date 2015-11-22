@@ -14,11 +14,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch.BranchNodeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start.StartController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop.StopController;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
@@ -86,6 +88,12 @@ public class GraphController extends Controller<StackPane> {
                 break;
             case CHILD:
                 graphElement = new ChildController();
+                break;
+            case BRANCH_EDGE:
+                graphElement = new BranchEdgeController();
+                break;
+            case BRANCH_NODE:
+                graphElement = new BranchNodeController();
                 break;
         }
         

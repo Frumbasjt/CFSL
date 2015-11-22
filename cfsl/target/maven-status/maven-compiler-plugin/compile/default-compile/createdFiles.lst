@@ -1,3 +1,4 @@
+nl\utwente\cs\fmt\cfsl\gui\main\graph\node\branch\BranchNodeController.class
 nl\utwente\cs\fmt\cfsl\gui\util\TextFieldAutoSizer.class
 nl\utwente\cs\fmt\cfsl\Symbol.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphElementController$1.class
@@ -15,6 +16,7 @@ nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgePositionAnchorController$EdgePosi
 nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphController$2.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\child\ChildController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgeController.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\branch\BranchEdgeController.class
 nl\utwente\cs\fmt\cfsl\gui\Controller.class
 nl\utwente\cs\fmt\cfsl\gui\main\MainController.class
 nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController$1.class

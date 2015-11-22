@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Polygon fill="WHITE" stroke="BLACK" strokeType="INSIDE">
+        <points>
+          <Double fx:value="-40.0" />
+          <Double fx:value="0.0" />
+          
+          <Double fx:value="0.0" />
+          <Double fx:value="40.0" />
+          
+          <Double fx:value="40.0" />
+          <Double fx:value="0.0" />
+          
+          <Double fx:value="0.0" />
+          <Double fx:value="-40.0" />
+        </points>
+      </Polygon>
+      <HBox alignment="CENTER">
+         <children>
+            <TextField fx:id="textInput" alignment="CENTER" prefColumnCount="1" promptText="x" styleClass="minimal" />
+            <Label text="= ?" />
+         </children>
+      </HBox>
+   </children>
+</StackPane>
