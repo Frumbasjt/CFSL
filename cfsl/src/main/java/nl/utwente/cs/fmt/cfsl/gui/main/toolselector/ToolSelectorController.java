@@ -26,5 +26,6 @@ public class ToolSelectorController extends Controller<VBox> {
         tools.add(new ToolController(Symbol.STOP).getView());
         tools.add(new ToolController(Symbol.BRANCH_NODE).getView());
         tools.add(new ToolController(Symbol.BRANCH_EDGE).getView());
+        tools.add(new ToolController(Symbol.ABORT).getView());
     }
 }

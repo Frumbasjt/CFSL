@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.TextFieldAutoSizer;
 
@@ -19,17 +19,16 @@ import nl.utwente.cs.fmt.cfsl.gui.util.TextFieldAutoSizer;
  */
 public class ChildController extends EdgeController<Group> {
     @FXML private TextField textInput;
-    @FXML private Circle origin;
+    @FXML private Rectangle origin;
     
     public ChildController() {
         // Bind origin circle to start of curve
-        origin.layoutXProperty().bind(curve.startXProperty());
-        origin.layoutYProperty().bind(curve.startYProperty());
+        origin.layoutXProperty().bind(curve.startXProperty().subtract(origin.widthProperty().divide(2)));
+        origin.layoutYProperty().bind(curve.startYProperty().subtract(origin.heightProperty().divide(2)));
         
         // Center text input
-        middleProperty().addListener(o -> { 
-            updateTextLocation();
-        });
+        middleProperty().addListener(o -> updateTextLocation());
+        textInput.layoutBoundsProperty().addListener(o -> updateTextLocation());
         
         // Autosize text input
         TextFieldAutoSizer.addAutoSizeListener(textInput, 30);

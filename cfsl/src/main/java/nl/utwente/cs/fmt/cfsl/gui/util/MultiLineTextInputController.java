@@ -97,7 +97,10 @@ public class MultiLineTextInputController extends Controller<VBox> {
         switch (e.getCode()) {
             case ENTER:
                 index = getView().getChildren().indexOf(tf);
+                int caretPos = tf.getCaretPosition();
                 TextField newInput = newInput();
+                newInput.setText(tf.getText().substring(caretPos));
+                tf.setText(tf.getText().substring(0, caretPos));
                 getView().getChildren().add(index + 1, newInput);
                 newInput.requestFocus();
                 break;

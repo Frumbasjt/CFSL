@@ -14,6 +14,7 @@ import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
@@ -57,6 +58,9 @@ public class ToolController extends Controller<StackPane> {
                 break;
             case BRANCH_NODE:
                 graphElement = new BranchNodeController();
+                break;
+            case ABORT:
+                graphElement = new AbortController();
                 break;
             default:
                 graphElement = null;

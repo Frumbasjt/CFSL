@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
@@ -51,6 +52,7 @@ public class GraphController extends Controller<StackPane> {
         public void set(GraphElementController value) {
             if (get() != value) {
                 if (get() != null) get().setSelected(false);
+                if (value != null) value.setSelected(true);
                 super.set(value);
             }
         }
@@ -67,6 +69,34 @@ public class GraphController extends Controller<StackPane> {
     public ObjectProperty selectedElementProperty() {
         return selectedElement;
     }
+    
+    /**
+     * The Abstract Syntax Element that is the key element.
+     */
+    private final ObjectProperty<ASEController> keyElement = new SimpleObjectProperty<ASEController>() {
+        @Override
+        public void set(ASEController value) {
+            if (get() != value) {
+                if (get() != null) get().setKeyElement(false);
+                if (value != null) value.setKeyElement(true);
+                super.set(value);
+            }
+        }
+    };
+
+    public ASEController getKeyElement() {
+        return keyElement.get();
+    }
+
+    public void setKeyElement(ASEController value) {
+        keyElement.set(value);
+    }
+
+    public ObjectProperty keyElementProperty() {
+        return keyElement;
+    }
+    
+    
     
     // PUBLIC METHODS
     
@@ -94,6 +124,9 @@ public class GraphController extends Controller<StackPane> {
                 break;
             case BRANCH_NODE:
                 graphElement = new BranchNodeController();
+                break;
+            case ABORT:
+                graphElement = new AbortController();
                 break;
         }
         

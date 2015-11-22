@@ -29,7 +29,6 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 public abstract class EdgeController<T> extends GraphElementController<Group> {
     @FXML protected QuadCurve curve;
     
-    
     protected final EdgePositionAnchorController startAnchor = new EdgePositionAnchorController(this, EdgePosition.START);
     protected final EdgePositionAnchorController endAnchor = new EdgePositionAnchorController(this, EdgePosition.END);
     protected final EdgeCurveControlAnchorController controlAnchor = new EdgeCurveControlAnchorController(this);
@@ -48,6 +47,7 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
         curve.endYProperty().addListener(o -> updateMiddle());
         curve.controlXProperty().addListener(o -> updateMiddle());
         curve.controlYProperty().addListener(o -> updateMiddle());
+        updateMiddle();
     }
     
     // CANVAS_ELEMENT_CONTROLLER IMPLEMENTATION

@@ -5,14 +5,11 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javafx.geometry.Pos;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
@@ -30,8 +27,8 @@ public class BranchNodeController extends NodeController {
     @Override
     public boolean canConnect(EdgeController edge, EdgePosition position) {
         return edge instanceof BranchEdgeController && 
-                (edgeIn == null && position == EdgePosition.END) || 
-                position == EdgePosition.START;
+                ((edgeIn == null && position == EdgePosition.END) || 
+                position == EdgePosition.START);
     }
 
     @Override
