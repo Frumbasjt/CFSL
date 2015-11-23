@@ -17,7 +17,6 @@ import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
@@ -25,6 +24,7 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
+import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
 
 /**
  *
@@ -75,10 +75,8 @@ public class ASEController extends NodeController {
         });
         
         keyElement.addListener(o -> { 
-            System.out.println("key element listener fired");
             if (isKeyElement()) {
                 getView().getStyleClass().add("key-element");
-                System.out.println(getView().getStyleClass());
             } else {
                 getView().getStyleClass().remove("key-element");
             }

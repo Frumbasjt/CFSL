@@ -5,13 +5,14 @@
  */
 package nl.utwente.cs.fmt.cfsl.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Richard
  */
-public class Edge extends GraphElement {
-    protected Node startNode;
-    protected Node endNode;
-    
-    
+public class Graph {
+    private final Set<Node> nodes = new HashSet<>();
+    private final Set<Edge> edges = new HashSet<>();
 }

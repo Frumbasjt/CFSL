@@ -14,7 +14,7 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**

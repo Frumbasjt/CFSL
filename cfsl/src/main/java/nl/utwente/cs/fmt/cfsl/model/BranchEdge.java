@@ -9,9 +9,14 @@ package nl.utwente.cs.fmt.cfsl.model;
  *
  * @author Richard
  */
-public class Edge extends GraphElement {
-    protected Node startNode;
-    protected Node endNode;
-    
-    
+public class BranchEdge extends Edge {
+    private String value;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

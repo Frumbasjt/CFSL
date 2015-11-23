@@ -8,9 +8,9 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop;
 import javafx.geometry.Pos;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
+import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
 
 /**
  *

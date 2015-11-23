@@ -6,8 +6,6 @@
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -16,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
+import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
 import nl.utwente.ewi.caes.tactilefx.control.Anchor;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
@@ -118,12 +117,5 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
             TactilePane.moveAwayFrom(getView(), rejectingConnector.getNode().getView());
         }
         MainController.getInstance().getCanvas().showEdgeConnectors(false);
-    }
-    
-    // NESTED ENUMS
-    
-    public static enum EdgePosition {
-        START,
-        END
     }
 }

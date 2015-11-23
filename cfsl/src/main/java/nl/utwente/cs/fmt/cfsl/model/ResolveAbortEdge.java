@@ -9,9 +9,5 @@ package nl.utwente.cs.fmt.cfsl.model;
  *
  * @author Richard
  */
-public class Edge extends GraphElement {
-    protected Node startNode;
-    protected Node endNode;
-    
-    
+public class ResolveAbortEdge extends AbortEdge {
 }
