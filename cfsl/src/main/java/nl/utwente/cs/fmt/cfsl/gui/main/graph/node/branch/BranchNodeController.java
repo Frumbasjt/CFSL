@@ -7,7 +7,9 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch;
 
 import java.util.HashSet;
 import java.util.Set;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
@@ -21,6 +23,8 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
  */
 public class BranchNodeController extends NodeController {
 
+    @FXML private TextField textInput;
+    
     private BranchEdgeController edgeIn = null;
     private Set<BranchEdgeController> edgesOut = new HashSet<>();
     
@@ -39,11 +43,13 @@ public class BranchNodeController extends NodeController {
                 if (edgeIn == null) {
                     edgeIn = branchEdge;
                     branchEdge.setFromBranchNode(false);
+                    connectedEdgeAnchors.add(edge.getEndAnchor());
                     return true;
                 }
             } else {
                 edgesOut.add(branchEdge);
                 branchEdge.setFromBranchNode(true);
+                connectedEdgeAnchors.add(edge.getStartAnchor());
                 return true;
             }
         }
@@ -53,40 +59,44 @@ public class BranchNodeController extends NodeController {
     @Override
     public void disconnect(EdgeController edge, EdgePosition position) {
         if (position == EdgePosition.END && edge == edgeIn) {
+            connectedEdgeAnchors.remove(edge.getEndAnchor());
             edgeIn = null;
         } else if (position == EdgePosition.START) {
             ((BranchEdgeController) edge).setFromBranchNode(false);
+            connectedEdgeAnchors.remove(edge.getStartAnchor());
             edgesOut.remove(edge);
         }
     }
 
     @Override
-    public void initCanvas(GraphController canvas) {
+    public void afterAddedToGraph(GraphController canvas) {
         EdgeConnectorController connector;
 
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.TOP_CENTER, 
             null, 
             connector.getView().radiusProperty().multiply(-1));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.BOTTOM_CENTER, 
             null, 
             connector.getView().radiusProperty());
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.CENTER_LEFT, 
             connector.getView().radiusProperty().multiply(-1), 
             null);
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.CENTER_RIGHT, 
             connector.getView().radiusProperty(),
             null); 
+        
+        textInput.requestFocus();
     }
     
 }

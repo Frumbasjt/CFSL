@@ -8,9 +8,12 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
+import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
  *
@@ -21,12 +24,25 @@ public abstract class GraphElementController<T> extends Controller{
     
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
             
+    private GraphController graph;
     
     public GraphElementController() {
+        initialize();
+    }
+    
+    protected GraphElementController(String viewName) {
+        super(viewName);
+        initialize();
+    }
+    
+    private void initialize() {
         getView().addEventHandler(MouseEvent.MOUSE_PRESSED, e -> mousePressed(e));
+        getView().addEventHandler(KeyEvent.KEY_PRESSED, e-> keyPressed(e));
         
         selected.addListener(o -> { 
-            System.out.println(this + ": " + isSelected());
+            if(isSelected()) {
+                getView().requestFocus();
+            }
         });
     }
     
@@ -54,12 +70,25 @@ public abstract class GraphElementController<T> extends Controller{
     
     // METHODS
     
+    // Called by GraphController
+    final void _addToGraph(GraphController graph) {
+        this.graph = graph;
+        afterAddedToGraph(graph);
+    }
+    
     /**
-     * Called when added to the canvas.
+     * Called after the element is added to the graph.
      * 
-     * @param canvas the Canvas that the CanvasElement was added to
+     * @param graph the Graph that the GraphElement was added to.
      */
-    public abstract void initCanvas(GraphController canvas);
+    protected abstract void afterAddedToGraph(GraphController graph);
+    
+    /**
+     * Called before the element is removed from the graph.
+     * 
+     * @param graph the Graph that the GraphElement was removed from.
+     */
+    protected abstract void beforeRemovedFromGraph(GraphController graph);
     
     // EVENT HANDLING
         
@@ -67,5 +96,14 @@ public abstract class GraphElementController<T> extends Controller{
         setSelected(true);
         MainController.getInstance().getCanvas().setSelectedElement(this);
         event.consume();
+    }
+    
+    private void keyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.DELETE) {
+            if (graph != null) {
+                beforeRemovedFromGraph(graph);
+                graph.getContainer().getChildren().remove(getView());
+            }
+        }
     }
 }

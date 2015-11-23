@@ -16,6 +16,8 @@ public enum Symbol {
     FLOW,
     CHILD,
     BRANCH_EDGE,
-    ABORT,
+    START_ABORT,
+    RESOLVE_ABORT,
+    RESUME_ABORT,
     BRANCH_NODE
 }

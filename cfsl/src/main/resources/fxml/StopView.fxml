@@ -11,4 +11,8 @@
    <children>
       <Circle radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
    </children>
+   <styleClass>
+      <String fx:value="node" />
+      <String fx:value="stop" />
+   </styleClass>
 </StackPane>

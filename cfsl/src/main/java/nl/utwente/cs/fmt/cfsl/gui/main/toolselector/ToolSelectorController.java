@@ -20,12 +20,14 @@ public class ToolSelectorController extends Controller<VBox> {
     public ToolSelectorController() {
         List<Node> tools = getView().getChildren();
         tools.add(new ToolController(Symbol.ABSTRACT_SYNTAX_ELEMENT).getView());
-        tools.add(new ToolController(Symbol.CHILD).getView());
-        tools.add(new ToolController(Symbol.FLOW).getView());
         tools.add(new ToolController(Symbol.START).getView());
         tools.add(new ToolController(Symbol.STOP).getView());
         tools.add(new ToolController(Symbol.BRANCH_NODE).getView());
+        tools.add(new ToolController(Symbol.CHILD).getView());
+        tools.add(new ToolController(Symbol.FLOW).getView());
         tools.add(new ToolController(Symbol.BRANCH_EDGE).getView());
-        tools.add(new ToolController(Symbol.ABORT).getView());
+        tools.add(new ToolController(Symbol.START_ABORT).getView());
+        tools.add(new ToolController(Symbol.RESOLVE_ABORT).getView());
+        tools.add(new ToolController(Symbol.RESUME_ABORT).getView());
     }
 }

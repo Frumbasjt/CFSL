@@ -118,54 +118,54 @@ public class ASEController extends NodeController {
     // GRAPH ELEMENT CONTROLLER IMPLEMENTATION
     
     @Override
-    public void initCanvas(GraphController canvas) {
+    public void afterAddedToGraph(GraphController canvas) {
         StackPane thisView = (StackPane) getView();
         EdgeConnectorController connector;
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.TOP_LEFT, 
                 thisView.widthProperty().divide(6), 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.TOP_CENTER, 
                 null, 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.TOP_RIGHT, 
                 thisView.widthProperty().divide(-6), 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.BOTTOM_LEFT, 
                 thisView.widthProperty().divide(6), 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.BOTTOM_CENTER, 
                 null, 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
                 Pos.BOTTOM_RIGHT, 
                 thisView.widthProperty().divide(-6), 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(), 
+        addEdgeConnector(connector, canvas.getContainer(), 
                 Pos.CENTER_LEFT, 
                 connector.getView().radiusProperty().multiply(-1).subtract(10), 
                 null);
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(), 
+        addEdgeConnector(connector, canvas.getContainer(), 
                 Pos.CENTER_RIGHT, 
                 connector.getView().radiusProperty().add(10), 
                 null);
@@ -178,30 +178,39 @@ public class ASEController extends NodeController {
     @Override
     public boolean connect(EdgeController edge, EdgePosition position) {
         if (position == EdgePosition.END) {
+            connectedEdgeAnchors.add(edge.getEndAnchor());
             return true;
         } else {
             // Only one outgoing flow possible
             if (edge instanceof FlowController) {
                 if (flowOut == null) {
                     flowOut = (FlowController) edge;
+                    connectedEdgeAnchors.add(edge.getStartAnchor());
                     return true;
                 }
             }
             // Only one outgoing branch possible
-            if (edge instanceof BranchEdgeController) {
+            else if (edge instanceof BranchEdgeController) {
                 if (branchOut == null) {
                     branchOut = (BranchEdgeController) edge;
+                    connectedEdgeAnchors.add(edge.getStartAnchor());
                     return true;
                 }
             }
+            // Infinite amount of other outgoing edges possible
+            else {
+                connectedEdgeAnchors.add(edge.getStartAnchor());
+                return true;
+            }
+            
         }
-        return true;
+        return false;
     }
 
     @Override
     public void disconnect(EdgeController edge, EdgePosition position) {
         if (position == EdgePosition.END) {
-            
+            connectedEdgeAnchors.remove(edge.getEndAnchor());
         } else {
             if (edge instanceof FlowController) {
                 if (flowOut == edge) {
@@ -212,6 +221,7 @@ public class ASEController extends NodeController {
                     branchOut = null;
                 }
             }
+            connectedEdgeAnchors.remove(edge.getStartAnchor());
         }
     }
 

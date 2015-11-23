@@ -1,11 +1,28 @@
+// GENERAL
+
 .scroll-pane > .viewport {
    -fx-background-color: transparent;
 }
+
+// Text
+
+.text-field.minimal {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.text-field, .label {
+    -fx-font-size: 16px;
+}
+
+// TOOLS
 
 .tool-selector {
     -fx-border-width: 1px;
     -fx-border-color: black;
 }
+
+// CANVAS
 
 .canvas-view-container {
     -fx-background-color: #99ccff;
@@ -28,9 +45,25 @@
     -fx-cursor: se-resize;
 }
 
+// Graph
+
+.selection-box {
+    -fx-stroke-dash-array: 5 10;
+}
+
+// Nodes
+
+/*.ase:selected {
+    -fx-border-color: blue;
+}*/
+
+// ASE
+
 .ase {
     -fx-border-width: 1px;
     -fx-border-color: black;
+    -fx-border-style: solid inside;
+    -fx-border-insets: 2px;
     -fx-background-color: white;
 }
 
@@ -38,36 +71,16 @@
     -fx-border-width: 3px;
 }
 
-.ase:selected {
-    -fx-border-color: blue;
+.ase.key-element .multi-line-text-input .text {
+    -fx-underline: true;
 }
 
-.edge:selected .edge-head {
-    -fx-stroke: blue;
-    -fx-fill: blue;
-}
-
-.edge:selected .edge-curve {
-    -fx-stroke: blue;
-}
-
-.edge .text {
-    -fx-effect: dropshadow(three-pass-box, white, 10, 0.9, 0, 0);
-}
+// Edges
 
 .edge-anchor {
     -fx-fill: transparent;
-    -fx-stroke: black;
-    -fx-stroke-width: 1;
-}
-
-.edge-anchor.control {
     -fx-stroke: blue;
-}
-
-.text-field.minimal {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
+    -fx-stroke-width: 1;
 }
 
 .edge-control-line {
@@ -76,10 +89,43 @@
     -fx-stroke-dash-array: 5 5;
 }
 
-.text-field, .label {
-    -fx-font-size: 16px;
+.edge .text {
+    -fx-effect: dropshadow(three-pass-box, white, 10, 0.9, 0, 0);
 }
+
+/*.edge:selected .edge-head {
+    -fx-stroke: blue;
+    -fx-fill: blue;
+}
+
+.edge:selected .edge-curve {
+    -fx-stroke: blue;
+}*/
+
+// Child
 
 .edge.child .edge-curve {
     -fx-stroke-dash-array: 5 5;
+}
+
+// Flow
+
+.edge.flow .edge-curve,
+.edge.branch .edge-curve {
+    -fx-stroke-width: 3px;
+}
+
+// Abort
+
+.edge.abort .edge-curve {
+    -fx-stroke-width: 2px;
+}
+
+.edge.abort .edge-curve,
+.edge.abort .edge-head {
+    -fx-stroke: red;
+}
+
+.edge.abort .edge-head {
+    -fx-fill: red;
 }

@@ -38,6 +38,20 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
      * Creates a new EdgeController.
      */
     public EdgeController() {
+        initialize();
+    }
+    
+    /**
+     * Creates a new EdgeController.
+     * 
+     * @param viewName the name of the FXML file that defines the View
+     */
+    protected EdgeController(String viewName) {
+        super(viewName);
+        initialize();
+    }
+    
+    private void initialize() {
         TactilePane.setDraggable(getView(), false);
         
         // Recalculate middle of the curve when curve changes
@@ -53,9 +67,9 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
     // CANVAS_ELEMENT_CONTROLLER IMPLEMENTATION
     
     @Override
-    public void initCanvas(GraphController canvas) {
+    protected void afterAddedToGraph(GraphController graph) {
         // Add anchors to the canvas
-        List canvasViewChildren = canvas.getCanvasView().getChildren();
+        List canvasViewChildren = graph.getContainer().getChildren();
         canvasViewChildren.add(startAnchor.getView());
         canvasViewChildren.add(endAnchor.getView());
         canvasViewChildren.add(controlAnchor.getView());
@@ -111,8 +125,32 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
         });
         
         // Track position anchors
-        canvas.getCanvasView().getActiveNodes().add(startAnchor.getView());
-        canvas.getCanvasView().getActiveNodes().add(endAnchor.getView());
+        graph.getContainer().getActiveNodes().add(startAnchor.getView());
+        graph.getContainer().getActiveNodes().add(endAnchor.getView());
+    }
+    
+    @Override
+    protected void beforeRemovedFromGraph(GraphController graph) {
+        TactilePane container = graph.getContainer();
+        if (startAnchor.getConnector() != null) {
+            startAnchor.getConnector().disconnect(startAnchor);
+        }
+        if (endAnchor.getConnector() != null) {
+            endAnchor.getConnector().disconnect(endAnchor);
+        }
+        container.getActiveNodes().remove(startAnchor.getView());
+        container.getActiveNodes().remove(endAnchor.getView());
+        container.getChildren().removeAll(startAnchor.getView(), endAnchor.getView(), controlAnchor.getView(), controlLine.getView());
+    }
+    
+    // METHODS
+    
+    public final void disconnectAnchor(EdgePosition position) {
+        if (position == EdgePosition.START) {
+            TactilePane.setAnchor(startAnchor.getView(), null);
+        } else {
+            TactilePane.setAnchor(endAnchor.getView(), null);
+        }
     }
     
     // PROPERTIES
@@ -136,5 +174,12 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
         middle.set(Utils.eval(curve, 0.5f));
     }
     
+    public EdgePositionAnchorController getStartAnchor() {
+        return startAnchor;
+    }
+    
+    public EdgePositionAnchorController getEndAnchor() {
+        return endAnchor;
+    }
     
 }

@@ -19,29 +19,29 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 public class StopController extends NodeController {
 
     @Override
-    public void initCanvas(GraphController canvas) {
+    public void afterAddedToGraph(GraphController canvas) {
         EdgeConnectorController connector;
 
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.TOP_CENTER, 
             null, 
             connector.getView().radiusProperty().multiply(-1));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.BOTTOM_CENTER, 
             null, 
             connector.getView().radiusProperty());
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.CENTER_LEFT, 
             connector.getView().radiusProperty().multiply(-1), 
             null);
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getCanvasView(),
+        addEdgeConnector(connector, canvas.getContainer(),
             Pos.CENTER_RIGHT, 
             connector.getView().radiusProperty(),
             null); 
@@ -54,12 +54,16 @@ public class StopController extends NodeController {
 
     @Override
     public boolean connect(EdgeController edge, EdgePosition position) {
-        return position == EdgePosition.END;
+        if (position == EdgePosition.END) {
+            connectedEdgeAnchors.add(edge.getEndAnchor());
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void disconnect(EdgeController edge, EdgePosition position) {
-        
+        connectedEdgeAnchors.remove(edge.getEndAnchor());
     }
     
 }

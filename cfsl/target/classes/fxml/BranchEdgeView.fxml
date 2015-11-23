@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Group fx:id="root" styleClass="edge" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Group fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="headWrapper" layoutX="145.0" layoutY="-10.0" prefHeight="20.0" prefWidth="10.0" rotate="70.5">
          <children>
@@ -26,7 +26,11 @@
             </Polygon>
          </children>
       </Pane>
-      <QuadCurve fx:id="curve" controlX="75.0" controlY="25.0" endX="150.0" fill="#ffffff00" startY="50.0" stroke="BLACK" strokeWidth="2.0" styleClass="edge-curve" />
+      <QuadCurve fx:id="curve" controlX="75.0" controlY="25.0" endX="150.0" fill="#ffffff00" startY="50.0" stroke="BLACK" strokeLineCap="BUTT" strokeWidth="3.0" styleClass="edge-curve" />
       <TextField fx:id="textInput" alignment="CENTER" layoutX="46.0" layoutY="13.0" prefHeight="25.0" prefWidth="59.0" styleClass="minimal" text="branch" />
    </children>
+   <styleClass>
+      <String fx:value="edge" />
+      <String fx:value="branch" />
+   </styleClass>
 </Group>

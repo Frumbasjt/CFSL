@@ -5,8 +5,10 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -40,6 +42,9 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
         edge.selectedProperty().addListener(o -> { 
             setVisible(edge.isSelected() || getConnector() == null);
         });
+        connectorProperty().addListener(o -> { 
+            setVisible(edge.isSelected() || getConnector() == null);
+        });
         
         this.position = position;
     }
@@ -50,14 +55,18 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
      * The controller for the EdgeConnector that this position anchor is 
      * connected to, if any.
      */
-    private final ReadOnlyObjectWrapper<EdgeConnectorController> connector = new ReadOnlyObjectWrapper<>();
+    private final SimpleObjectProperty<EdgeConnectorController> connector = new SimpleObjectProperty<>();
 
     public EdgeConnectorController getConnector() {
         return connector.get();
     }
+    
+    public void setConnector(EdgeConnectorController value) {
+        connector.set(value);
+    }
 
-    public ReadOnlyObjectProperty connectorProperty() {
-        return connector.getReadOnlyProperty();
+    public ObjectProperty<EdgeConnectorController> connectorProperty() {
+        return connector;
     }
     
     public EdgePosition getPosition() {

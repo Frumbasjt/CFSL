@@ -15,6 +15,9 @@ import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResolveAbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResumeAbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.StartAbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
@@ -59,8 +62,14 @@ public class ToolController extends Controller<StackPane> {
             case BRANCH_NODE:
                 graphElement = new BranchNodeController();
                 break;
-            case ABORT:
-                graphElement = new AbortController();
+            case START_ABORT:
+                graphElement = new StartAbortController();
+                break;
+            case RESOLVE_ABORT:
+                graphElement = new ResolveAbortController();
+                break;
+            case RESUME_ABORT:
+                graphElement = new ResumeAbortController();
                 break;
             default:
                 graphElement = null;
@@ -73,11 +82,15 @@ public class ToolController extends Controller<StackPane> {
     
     private double initX;
     private double initY;
+    private double localX;
+    private double localY;
     
     @FXML
     void mousePressed(MouseEvent event) {
         initX = event.getSceneX();
         initY = event.getSceneY();
+        localX = event.getX();
+        localY = event.getY();
         
         event.consume();
     }
@@ -98,7 +111,7 @@ public class ToolController extends Controller<StackPane> {
         GraphController canvas = MainController.getInstance().getCanvas();
         Point2D point = canvas.getView().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
         if (canvas.getView().getBoundsInLocal().contains(point)) {
-            canvas.addNewCanvasElement(symbol, point.getX(), point.getY());
+            canvas.addNewGraphElement(symbol, point.getX() - localX, point.getY() - localY);
         }
         
         event.consume();

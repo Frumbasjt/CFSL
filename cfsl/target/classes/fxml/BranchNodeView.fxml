@@ -31,4 +31,8 @@
          </children>
       </HBox>
    </children>
+   <styleClass>
+      <String fx:value="node" />
+      <String fx:value="branch-node" />
+   </styleClass>
 </StackPane>

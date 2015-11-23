@@ -5,6 +5,8 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -15,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResolveAbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResumeAbortController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.StartAbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
@@ -31,16 +36,28 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  * @author Richard
  */
 public class GraphController extends Controller<StackPane> {
-    @FXML
-    private TactilePane canvas;
+    
+    @FXML private TactilePane canvas;
+    
+    private final SelectionController selectionBox;
     
     public GraphController() {
         canvas.setProximityThreshold(10);
+        
+        selectionBox = new SelectionController(this);
+        canvas.getChildren().add(selectionBox.getView());
+        
+        canvas.setOnMousePressed(e -> setSelectedElement(null));
     }
     
     // PROPERTIES
     
-    public TactilePane getCanvasView() {
+    /**
+     * Returns the TactilePane that contains the GraphElements.
+     * 
+     * @return a TactilePane
+     */
+    public TactilePane getContainer() {
         return canvas;
     }
     
@@ -66,7 +83,7 @@ public class GraphController extends Controller<StackPane> {
         selectedElement.set(value);
     }
 
-    public ObjectProperty selectedElementProperty() {
+    public ObjectProperty<GraphElementController> selectedElementProperty() {
         return selectedElement;
     }
     
@@ -100,7 +117,7 @@ public class GraphController extends Controller<StackPane> {
     
     // PUBLIC METHODS
     
-    public void addNewCanvasElement(Symbol symbol, double centerX, double centerY) {
+    public void addNewGraphElement(Symbol symbol, double x, double y) {
         
         GraphElementController graphElement = null;
         switch (symbol) {
@@ -125,8 +142,14 @@ public class GraphController extends Controller<StackPane> {
             case BRANCH_NODE:
                 graphElement = new BranchNodeController();
                 break;
-            case ABORT:
-                graphElement = new AbortController();
+            case START_ABORT:
+                graphElement = new StartAbortController();
+                break;
+            case RESOLVE_ABORT:
+                graphElement = new ResolveAbortController();
+                break;
+            case RESUME_ABORT:
+                graphElement = new ResumeAbortController();
                 break;
         }
         
@@ -139,7 +162,7 @@ public class GraphController extends Controller<StackPane> {
         
         // Relocate the view so its center is located at (centerX, centerY), if space allows
         Bounds viewBounds = view.getBoundsInLocal();
-        view.relocate(Math.max(0 - viewBounds.getMinX(), centerX - viewBounds.getWidth() / 2), Math.max(0 - viewBounds.getMinY(), centerY - viewBounds.getHeight() / 2));
+        view.relocate(Math.max(x, 0), Math.max(y, 0));
         
         // Resize the canvas if necessary
         Bounds minBounds = Utils.getChildrenBounds(canvas);
@@ -147,11 +170,15 @@ public class GraphController extends Controller<StackPane> {
         canvas.setPrefHeight(Math.max(canvas.getHeight(), minBounds.getMaxY()));
         
         // Initialise graph element
-        graphElement.initCanvas(this);
+        graphElement._addToGraph(this);
     }
     
     public void showEdgeConnectors(boolean show) {
+        List<Node> children = new ArrayList<>();
         for (Node child: canvas.getChildren()) {
+            children.add(child);
+        }
+        for (Node child: children) {
             Controller controller = Controller.getController(child);
             if (controller != null && controller instanceof NodeController) {
                 ((NodeController) controller).showEdgeConnectors(show);

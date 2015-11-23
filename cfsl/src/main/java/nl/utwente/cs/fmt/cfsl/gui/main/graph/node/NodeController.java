@@ -10,8 +10,10 @@ import java.util.List;
 import javafx.beans.value.ObservableDoubleValue;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController.EdgePosition;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
@@ -21,6 +23,7 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  */
 public abstract class NodeController extends GraphElementController<StackPane> {
     private final List<EdgeConnectorController> edgeConnectors = new ArrayList<>();
+    protected final List<EdgePositionAnchorController> connectedEdgeAnchors = new ArrayList<>();
     
     public NodeController() {
         TactilePane.setGoToForegroundOnContact(getView(), false);
@@ -31,6 +34,19 @@ public abstract class NodeController extends GraphElementController<StackPane> {
             controller.getView().setVisible(show);
         }
     }
+    
+    @Override
+    protected void beforeRemovedFromGraph(GraphController graph) {
+        for (EdgeConnectorController connector : edgeConnectors) {
+            graph.getContainer().getActiveNodes().remove(connector.getView());
+        }
+        for (EdgePositionAnchorController anchor : connectedEdgeAnchors) {
+            anchor.setConnector(null);
+            TactilePane.setAnchor(anchor.getView(), null);
+        }
+    }
+    
+    // HELP METHOD
     
     protected void addEdgeConnector(EdgeConnectorController connector, TactilePane tracker, Pos alignment,
             ObservableDoubleValue offsetX, ObservableDoubleValue offsetY) {
@@ -43,6 +59,8 @@ public abstract class NodeController extends GraphElementController<StackPane> {
         tracker.getActiveNodes().add(connector.getView());
         edgeConnectors.add(connector);
     }
+    
+    // PUBLIC METHODS
     
     public abstract boolean canConnect(EdgeController edge, EdgePosition position);
     

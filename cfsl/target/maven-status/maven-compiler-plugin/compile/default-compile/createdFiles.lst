@@ -3,10 +3,12 @@ nl\utwente\cs\fmt\cfsl\gui\main\graph\node\NodeController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\start\StartController.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController$1.class
 nl\utwente\cs\fmt\cfsl\gui\util\Utils.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\abort\ResumeAbortController.class
 nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController$1.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgePositionAnchorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\stop\StopController.class
 nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\SelectionController.class
 nl\utwente\cs\fmt\cfsl\App.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphController$1.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\branch\BranchNodeController.class
@@ -18,11 +20,14 @@ nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgeCurveControlLineController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphElementController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgeCurveControlAnchorController.class
+nl\utwente\cs\fmt\cfsl\model\Node.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\abort\ResolveAbortController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgeAnchorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgePositionAnchorController$EdgePosition.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\GraphController$2.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\child\ChildController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\abort\AbortController.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\abort\StartAbortController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgeController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\branch\BranchEdgeController.class
 nl\utwente\cs\fmt\cfsl\gui\Controller.class
@@ -31,3 +36,4 @@ nl\utwente\cs\fmt\cfsl\gui\main\toolselector\ToolSelectorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\flow\FlowController.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\EdgeConnectorController.class
+nl\utwente\cs\fmt\cfsl\model\Edge.class
