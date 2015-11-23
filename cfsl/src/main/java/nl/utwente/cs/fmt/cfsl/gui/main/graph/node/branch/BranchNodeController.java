@@ -5,13 +5,10 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch;
 
-import java.util.HashSet;
-import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 import nl.utwente.cs.fmt.cfsl.model.BranchNode;
@@ -23,12 +20,12 @@ import nl.utwente.cs.fmt.cfsl.model.BranchNode;
 public class BranchNodeController extends NodeController<BranchNode> {
 
     @FXML private TextField textInput;
-    
-    private BranchEdgeController edgeIn = null;
-    private Set<BranchEdgeController> edgesOut = new HashSet<>();
 
     public BranchNodeController(BranchNode model) {
         super(model);
+        
+        // Control model
+        model.conditionIdProperty().bind(textInput.textProperty());
     }
     
     // PROPERTIES

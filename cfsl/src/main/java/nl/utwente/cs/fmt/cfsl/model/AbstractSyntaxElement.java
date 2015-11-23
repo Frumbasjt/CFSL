@@ -7,6 +7,10 @@ package nl.utwente.cs.fmt.cfsl.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -14,30 +18,49 @@ import java.util.List;
  */
 public class AbstractSyntaxElement extends Node {
     private final List<String> labels = new ArrayList<>();
-
-    private boolean keyElement = false;
-    private String identifier = null;
     
     // PROPERTIES
     
+    /**
+     * The labels this abstract syntax element has.
+     * @return a List of Strings
+     */
     public List<String> getLabels() {
         return labels;
     }
     
+    /**
+     * Whether this abstract syntax element is the key element.
+     */
+    private final BooleanProperty keyElement = new SimpleBooleanProperty();
+
     public boolean isKeyElement() {
+        return keyElement.get();
+    }
+
+    public void setKeyElement(boolean value) {
+        keyElement.set(value);
+    }
+
+    public BooleanProperty keyElementProperty() {
         return keyElement;
     }
+    
+    /**
+     * The identifier of this abstract syntax element.
+     */
+    private final StringProperty id = new SimpleStringProperty();
 
-    public void setKeyElement(boolean keyElement) {
-        this.keyElement = keyElement;
+    public String getId() {
+        return id.get();
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public void setId(String value) {
+        id.set(value);
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public StringProperty idProperty() {
+        return id;
     }
     
     // METHODS

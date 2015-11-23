@@ -5,19 +5,29 @@
  */
 package nl.utwente.cs.fmt.cfsl.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author Richard
  */
 public class ChildEdge extends Edge {
-    private String label;
+    
+    /**
+     * The child edge's label.
+     */
+    private final StringProperty label = new SimpleStringProperty();
 
     public String getLabel() {
-        return label;
+        return label.get();
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLabel(String value) {
+        label.set(value);
     }
-    
+
+    public StringProperty labelProperty() {
+        return label;
+    }
 }

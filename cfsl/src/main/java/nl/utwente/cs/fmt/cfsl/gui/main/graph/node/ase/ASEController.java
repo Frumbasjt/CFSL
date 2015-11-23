@@ -16,8 +16,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
@@ -33,14 +31,11 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
     
     private final MultiLineTextInputController textInput;
     
-    private FlowController flowOut;
-    private BranchEdgeController branchOut;
-    
     public ASEController(AbstractSyntaxElement model) {
         super(model);
         
         textInput = new MultiLineTextInputController("Abstract Syntax Element");
-        ((StackPane)getView()).getChildren().add(textInput.getView());
+        getView().getChildren().add(textInput.getView());
         
         identifierPane.setVisible(false);
         
@@ -69,7 +64,7 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
             } else {
                 item1.setText("Set identifier");
                 identifierPane.setVisible(false);
-                identifierTextInput.setText("");
+                identifierTextInput.setText(null);
             }
         });
         
@@ -82,10 +77,24 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
                 getModel().setKeyElement(false);
             }
         });
+        
+        // Control model
+        model.keyElementProperty().bind(keyElement);
+        model.idProperty().bind(identifierTextInput.textProperty());
+        textInput.totalTextProperty().addListener(o -> { 
+            model.getLabels().clear();
+            String labels[] = textInput.getTotalText().split("\n");
+            for (int i = 0; i < labels.length; i++) {
+                model.getLabels().add(labels[i]);
+            }
+        });
     }
     
     // PROPERTIES
     
+    /**
+     * Whether the identifier should be visible.
+     */
     private final BooleanProperty identifierVisible = new SimpleBooleanProperty(false);
 
     public boolean isIdentifierVisible() {
@@ -100,6 +109,9 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
         return identifierVisible;
     }
     
+    /**
+     * Whether the abstract syntax element is the key element.
+     */
     private final BooleanProperty keyElement = new SimpleBooleanProperty(false);
 
     public boolean isKeyElement() {
@@ -122,54 +134,54 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
     // GRAPH ELEMENT CONTROLLER IMPLEMENTATION
     
     @Override
-    public void afterAddedToGraph(GraphController canvas) {
+    public void afterAddedToGraph(GraphController graph) {
         StackPane thisView = (StackPane) getView();
         EdgeConnectorController connector;
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.TOP_LEFT, 
                 thisView.widthProperty().divide(6), 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.TOP_CENTER, 
                 null, 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.TOP_RIGHT, 
                 thisView.widthProperty().divide(-6), 
                 connector.getView().radiusProperty().multiply(-1).subtract(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.BOTTOM_LEFT, 
                 thisView.widthProperty().divide(6), 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.BOTTOM_CENTER, 
                 null, 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
                 Pos.BOTTOM_RIGHT, 
                 thisView.widthProperty().divide(-6), 
                 connector.getView().radiusProperty().add(10));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(), 
+        addEdgeConnector(connector, graph.getContainer(), 
                 Pos.CENTER_LEFT, 
                 connector.getView().radiusProperty().multiply(-1).subtract(10), 
                 null);
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(), 
+        addEdgeConnector(connector, graph.getContainer(), 
                 Pos.CENTER_RIGHT, 
                 connector.getView().radiusProperty().add(10), 
                 null);

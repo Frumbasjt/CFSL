@@ -13,7 +13,7 @@ public class StartNode extends Node {
 
     @Override
     public boolean connect(Edge edge, EdgePosition position) {
-        if (position == EdgePosition.START && edge instanceof FlowEdge) {
+        if (outgoingEdges.isEmpty() && position == EdgePosition.START && edge instanceof FlowEdge) {
             outgoingEdges.add(edge);
             edge.setStartNode(this);
             return true;
@@ -23,7 +23,7 @@ public class StartNode extends Node {
 
     @Override
     public boolean canConnect(Edge edge, EdgePosition position) {
-        return position == EdgePosition.START && edge instanceof FlowEdge;
+        return outgoingEdges.isEmpty() && position == EdgePosition.START && edge instanceof FlowEdge;
     }
     
 }

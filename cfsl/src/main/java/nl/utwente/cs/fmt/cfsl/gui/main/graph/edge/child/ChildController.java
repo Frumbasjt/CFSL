@@ -34,6 +34,8 @@ public class ChildController extends EdgeController<ChildEdge> {
         
         // Autosize text input
         TextFieldAutoSizer.addAutoSizeListener(textInput, 30);
+        
+        model.labelProperty().bind(textInput.textProperty());
     }
     
     // PROPERTIES

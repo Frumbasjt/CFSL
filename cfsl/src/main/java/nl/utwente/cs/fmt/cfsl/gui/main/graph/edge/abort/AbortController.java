@@ -42,6 +42,8 @@ public abstract class AbortController<M extends AbortEdge> extends EdgeControlle
         textInput = new MultiLineTextInputController("Reason");
         textInputContainer.getChildren().add(textInput.getView());
         
+        model.reasonProperty().bind(textInput.totalTextProperty());
+        
         // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
         headWrapper.layoutYProperty().bind(curve.endYProperty().subtract(headWrapper.heightProperty().divide(2)));

@@ -52,12 +52,14 @@ public class BranchEdgeController extends EdgeController<BranchEdge> {
         textInput.editableProperty().bind(fromBranchNode);
         fromBranchNode.addListener(o -> { 
             if (isFromBranchNode()) {
-                textInput.setText("");
+                textInput.setText(null);
                 textInput.requestFocus();
             } else {
                 textInput.setText("branch");
             }
         });
+        
+        model.valueProperty().bind(textInput.textProperty());
     }
     
     // PROPERTIES

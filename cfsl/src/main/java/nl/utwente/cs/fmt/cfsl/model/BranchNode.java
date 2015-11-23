@@ -5,21 +5,33 @@
  */
 package nl.utwente.cs.fmt.cfsl.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author Richard
  */
 public class BranchNode extends Node {
-    private String identifier;
+    
 
     // PROPERTIES
     
-    public String getIdentifier() {
-        return identifier;
+    /**
+     * The id of the abstract syntax element that is the condition of the branch node.
+     */
+    private final StringProperty conditionId = new SimpleStringProperty();
+
+    public String getConditionId() {
+        return conditionId.get();
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setConditionId(String value) {
+        conditionId.set(value);
+    }
+
+    public StringProperty conditionIdProperty() {
+        return conditionId;
     }
     
     // METHODS

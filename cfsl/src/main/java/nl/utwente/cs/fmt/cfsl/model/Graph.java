@@ -42,16 +42,16 @@ public class Graph {
         for (Node node : nodes) {
             if (node instanceof AbstractSyntaxElement) {
                 AbstractSyntaxElement aseNode = (AbstractSyntaxElement) node;
-                if (aseNode.getIdentifier() != null && !ids.add(aseNode.getIdentifier())) {
-                    throw new IllegalStateException("More than one abstract syntax element with id " + aseNode.getIdentifier() + " defined");
+                if (aseNode.getId() != null && !ids.add(aseNode.getId())) {
+                    throw new IllegalStateException("More than one abstract syntax element with id " + aseNode.getId() + " defined");
                 }
             }
         }
         for (Node node : nodes) {
             if (node instanceof BranchNode) {
                 BranchNode branchNode = (BranchNode) node;
-                if (!ids.contains(branchNode.getIdentifier())) {
-                    throw new IllegalStateException("No abstract syntax element exists with id " + branchNode.getIdentifier());
+                if (!ids.contains(branchNode.getConditionId())) {
+                    throw new IllegalStateException("No abstract syntax element exists with id " + branchNode.getConditionId());
                 }
             }
         }
