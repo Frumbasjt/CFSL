@@ -88,7 +88,7 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
     
     @FXML
     void mousePressed(MouseEvent event) {
-        MainController.getInstance().getCanvas().showEdgeConnectors(true);
+        MainController.getInstance().getCanvas().showAllEdgeConnectors(true);
         if (getConnector() != null) {
             getConnector().disconnect(this);
             this.connector.set(null);
@@ -116,6 +116,6 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
         if (rejectingConnector != null) {
             TactilePane.moveAwayFrom(getView(), rejectingConnector.getNode().getView());
         }
-        MainController.getInstance().getCanvas().showEdgeConnectors(false);
+        MainController.getInstance().getCanvas().showAllEdgeConnectors(false);
     }
 }

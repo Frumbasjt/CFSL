@@ -10,24 +10,27 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
+import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
 
 /**
  *
  * @author Richard
  */
-public class BranchEdgeController extends EdgeController {
+public class BranchEdgeController extends EdgeController<BranchEdge> {
     @FXML private Pane headWrapper;
     @FXML private TextField textInput;
     
     /**
      * Creates a new BranchEdgeController.
+     * @param model
      */
-    public BranchEdgeController() {
+    public BranchEdgeController(BranchEdge model) {
+        super(model);
+        
         // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
         headWrapper.layoutYProperty().bind(curve.endYProperty().subtract(headWrapper.heightProperty().divide(2)));
@@ -57,11 +60,6 @@ public class BranchEdgeController extends EdgeController {
         });
     }
     
-    private void updateLabelLocation() {
-        Point2D middle = getMiddle();
-        textInput.relocate(middle.getX() - textInput.getWidth() / 2, middle.getY() - textInput.getHeight() / 2);
-    }
-    
     // PROPERTIES
     
     /**
@@ -81,5 +79,15 @@ public class BranchEdgeController extends EdgeController {
         return fromBranchNode;
     }
     
+    @Override
+    public String getToolName() {
+        return "Branch Edge";
+    }
     
+    // HELP METHODS
+    
+    private void updateLabelLocation() {
+        Point2D middle = getMiddle();
+        textInput.relocate(middle.getX() - textInput.getWidth() / 2, middle.getY() - textInput.getHeight() / 2);
+    }
 }

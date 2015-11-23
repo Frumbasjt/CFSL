@@ -5,15 +5,21 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort;
 
+import nl.utwente.cs.fmt.cfsl.model.StartAbortEdge;
+
 /**
  *
  * @author Richard
  */
-public class StartAbortController extends AbortController {
+public class StartAbortController extends AbortController<StartAbortEdge> {
 
-    public StartAbortController() {
-        super("abort:");
+    public StartAbortController(StartAbortEdge model) {
+        super(model, "abort:");
         getView().getStyleClass().add("start-abort");
     }
     
+    @Override
+    public String getToolName() {
+        return "Start Abort Edge";
+    }
 }

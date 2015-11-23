@@ -7,8 +7,6 @@ package nl.utwente.cs.fmt.cfsl.gui.util;
 
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -131,10 +129,18 @@ public class MultiLineTextInputController extends Controller<VBox> {
     }
     
     private void onLostFocus(TextField tf) {
-        if (tf != firstInput) {
-            if (tf.getText().isEmpty()) {
+        if (tf.getText().isEmpty()) {
+            if (tf != firstInput) {
                 getView().getChildren().remove(tf);
+            } else {
+                int i = 0;
+                for (; i < getView().getChildren().size() - 1; i++) {
+                    TextField tfThis = (TextField) getView().getChildren().get(i);
+                    TextField tfNext = (TextField) getView().getChildren().get(i + 1);
+                    tfThis.setText(tfNext.getText());
+                }
+                getView().getChildren().remove(i);
             }
-        }
+        }        
     }
 }

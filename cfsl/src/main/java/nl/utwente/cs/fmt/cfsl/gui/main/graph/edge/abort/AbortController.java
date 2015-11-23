@@ -8,7 +8,6 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -16,12 +15,14 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
+import nl.utwente.cs.fmt.cfsl.model.AbortEdge;
 
 /**
  *
  * @author Richard
+ * @param <M>
  */
-public abstract class AbortController extends EdgeController<Group> {
+public abstract class AbortController<M extends AbortEdge> extends EdgeController<M> {
     @FXML private Pane headWrapper;
     @FXML private VBox textInputContainer;
     @FXML private Label label;
@@ -31,10 +32,11 @@ public abstract class AbortController extends EdgeController<Group> {
     /**
      * Creates a new AbortController.
      * 
+     * @param model
      * @param label the label text that tells what kind of abort flow this edge represents
      */
-    protected AbortController(String label) {
-        super("AbortView");
+    protected AbortController(M model, String label) {
+        super(model, "AbortView");
         
         this.label.setText(label);
         textInput = new MultiLineTextInputController("Reason");

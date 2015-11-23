@@ -15,6 +15,7 @@ public class StartNode extends Node {
     public boolean connect(Edge edge, EdgePosition position) {
         if (position == EdgePosition.START && edge instanceof FlowEdge) {
             outgoingEdges.add(edge);
+            edge.setStartNode(this);
             return true;
         }
         return false;

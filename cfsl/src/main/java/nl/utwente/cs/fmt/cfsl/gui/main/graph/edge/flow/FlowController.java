@@ -8,25 +8,28 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
+import nl.utwente.cs.fmt.cfsl.model.FlowEdge;
 
 /**
  * Controller class for flow edges.
  * 
  * @author Richard
  */
-public class FlowController extends EdgeController<Group> {
+public class FlowController extends EdgeController<FlowEdge> {
     @FXML private Pane headWrapper;
     @FXML private Label label;
     
     /**
      * Creates a new FlowController.
+     * @param model
      */
-    public FlowController() {
+    public FlowController(FlowEdge model) {
+        super(model);
+        
         // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
         headWrapper.layoutYProperty().bind(curve.endYProperty().subtract(headWrapper.heightProperty().divide(2)));
@@ -45,6 +48,15 @@ public class FlowController extends EdgeController<Group> {
             updateLabelLocation();
         });
     }
+    
+    // PROPERTIES
+    
+    @Override
+    public String getToolName() {
+        return "Flow Edge";
+    }
+    
+    // HELP METHODS
     
     private void updateLabelLocation() {
         Point2D middle = getMiddle();

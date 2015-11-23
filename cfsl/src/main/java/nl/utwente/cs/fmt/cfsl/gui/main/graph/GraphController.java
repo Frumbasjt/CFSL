@@ -14,21 +14,12 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResolveAbortController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.ResumeAbortController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.StartAbortController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch.BranchNodeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start.StartController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop.StopController;
+import nl.utwente.cs.fmt.cfsl.model.Graph;
+import nl.utwente.cs.fmt.cfsl.model.GraphElement;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -37,17 +28,24 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  */
 public class GraphController extends Controller<StackPane> {
     
-    @FXML private TactilePane canvas;
+    @FXML private TactilePane container;
     
     private final SelectionController selectionBox;
+    private final Graph model;
     
     public GraphController() {
-        canvas.setProximityThreshold(10);
+        this(new Graph());
+    }
+    
+    public GraphController(Graph model) {
+        this.model = model;
+        
+        container.setProximityThreshold(10);
         
         selectionBox = new SelectionController(this);
-        canvas.getChildren().add(selectionBox.getView());
+        container.getChildren().add(selectionBox.getView());
         
-        canvas.setOnMousePressed(e -> setSelectedElement(null));
+        container.setOnMousePressed(e -> setSelectedElement(null));
     }
     
     // PROPERTIES
@@ -58,7 +56,7 @@ public class GraphController extends Controller<StackPane> {
      * @return a TactilePane
      */
     public TactilePane getContainer() {
-        return canvas;
+        return container;
     }
     
     /**
@@ -113,69 +111,55 @@ public class GraphController extends Controller<StackPane> {
         return keyElement;
     }
     
-    
-    
     // PUBLIC METHODS
     
-    public void addNewGraphElement(Symbol symbol, double x, double y) {
-        
+    /**
+     * Creates a new GraphElementController and adds it to the graph.
+     * 
+     * @param type the type of the model of the controller
+     * @param x the horizontal location of the graph element
+     * @param y the vertical location of the graph element
+     */
+    public void addNewGraphElement(Class<? extends GraphElement> type, double x, double y) {
         GraphElementController graphElement = null;
-        switch (symbol) {
-            case ABSTRACT_SYNTAX_ELEMENT:
-                graphElement = new ASEController();
-                break;
-            case FLOW:
-                graphElement = new FlowController();
-                break;
-            case START:
-                graphElement = new StartController();
-                break;
-            case STOP:
-                graphElement = new StopController();
-                break;
-            case CHILD:
-                graphElement = new ChildController();
-                break;
-            case BRANCH_EDGE:
-                graphElement = new BranchEdgeController();
-                break;
-            case BRANCH_NODE:
-                graphElement = new BranchNodeController();
-                break;
-            case START_ABORT:
-                graphElement = new StartAbortController();
-                break;
-            case RESOLVE_ABORT:
-                graphElement = new ResolveAbortController();
-                break;
-            case RESUME_ABORT:
-                graphElement = new ResumeAbortController();
-                break;
-        }
+        graphElement = GraphElementControllerFactory.build(type);
         
         if (graphElement == null) return;
         
+        // Update model
+        model.add(graphElement.getModel());
+        
         // Add new view to the canvas
         Node view = graphElement.getView();
-        canvas.getChildren().add(view);
-        view.applyCss();
-        
-        // Relocate the view so its center is located at (centerX, centerY), if space allows
-        Bounds viewBounds = view.getBoundsInLocal();
+        container.getChildren().add(view);
         view.relocate(Math.max(x, 0), Math.max(y, 0));
         
         // Resize the canvas if necessary
-        Bounds minBounds = Utils.getChildrenBounds(canvas);
-        canvas.setPrefWidth(Math.max(canvas.getWidth(), Math.max(minBounds.getWidth(), minBounds.getMaxX())));
-        canvas.setPrefHeight(Math.max(canvas.getHeight(), minBounds.getMaxY()));
+        Bounds minBounds = Utils.getChildrenBounds(container);
+        container.setPrefWidth(Math.max(container.getWidth(), Math.max(minBounds.getWidth(), minBounds.getMaxX())));
+        container.setPrefHeight(Math.max(container.getHeight(), minBounds.getMaxY()));
         
         // Initialise graph element
-        graphElement._addToGraph(this);
+        graphElement._setGraph(this);
+        graphElement.afterAddedToGraph(this);
     }
     
-    public void showEdgeConnectors(boolean show) {
+    /**
+     * Removes a graph element from the graph
+     * @param graphElement the controller of the graph element
+     */
+    public void removeGraphElement(GraphElementController graphElement) {
+        model.remove(graphElement.getModel());
+        getContainer().getChildren().remove(graphElement.getView());
+    }
+    
+    /**
+     * Show or hide all edge connectors from all nodes in the graph.
+     * @param show whether to show or hide the connectors
+     */
+    public void showAllEdgeConnectors(boolean show) {
         List<Node> children = new ArrayList<>();
-        for (Node child: canvas.getChildren()) {
+        for (Node child: container.getChildren()) {
             children.add(child);
         }
         for (Node child: children) {
@@ -188,35 +172,35 @@ public class GraphController extends Controller<StackPane> {
     
     // EVENT HANDLING
     
-    private double initWidth;
-    private double initHeight;
     private double initX;
     private double initY;
+    private double initWidth;
+    private double initHeight;
     
     @FXML
     void anchorMousePressed(MouseEvent event) {
-        initWidth = canvas.getWidth();
-        initHeight = canvas.getHeight();
         initX = event.getScreenX();
         initY = event.getScreenY();
+        initWidth = container.getWidth();
+        initHeight = container.getHeight();
     }
     
     @FXML
     void verticalAnchorMouseDragged(MouseEvent event) {
-        Bounds minBounds = Utils.getChildrenBounds(canvas);
-        canvas.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
+        Bounds minBounds = Utils.getChildrenBounds(container);
+        container.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
     }
     
     @FXML
     void horizontalAnchorMouseDragged(MouseEvent event) {
-        Bounds minBounds = Utils.getChildrenBounds(canvas);
-        canvas.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
+        Bounds minBounds = Utils.getChildrenBounds(container);
+        container.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
     }
     
     @FXML
     void diagonalAnchorMouseDragged(MouseEvent event) {
-        Bounds minBounds = Utils.getChildrenBounds(canvas);
-        canvas.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
-        canvas.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
+        Bounds minBounds = Utils.getChildrenBounds(container);
+        container.setPrefWidth(Math.max(minBounds.getMaxX(), initWidth + (event.getScreenX() - initX)));
+        container.setPrefHeight(Math.max(minBounds.getMaxY(), initHeight + (event.getScreenY() - initY)));
     }
 }

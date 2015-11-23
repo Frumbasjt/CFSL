@@ -39,8 +39,10 @@ public abstract class Node extends GraphElement {
      */
     public void disconnect(Edge edge, EdgePosition position) {
         if (position == EdgePosition.START) {
+            edge.setStartNode(null);
             outgoingEdges.remove(edge);
         } else {
+            edge.setEndNode(null);
             incomingEdges.remove(edge);
         }
     }

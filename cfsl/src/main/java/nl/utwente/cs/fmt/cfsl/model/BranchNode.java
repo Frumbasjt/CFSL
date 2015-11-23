@@ -27,10 +27,15 @@ public class BranchNode extends Node {
     @Override
     public boolean connect(Edge edge, EdgePosition position) {
         if (edge instanceof BranchEdge) {
-            for (Edge inEdge : incomingEdges) {
-                if (inEdge instanceof BranchEdge) {
-                    return false;
+            if (position == EdgePosition.END) {
+                for (Edge inEdge : incomingEdges) {
+                    if (inEdge instanceof BranchEdge) {
+                        return false;
+                    }
                 }
+                edge.setEndNode(this);
+            } else {
+                edge.setStartNode(this);
             }
             incomingEdges.add(edge);
             return true;
@@ -41,9 +46,11 @@ public class BranchNode extends Node {
     @Override
     public boolean canConnect(Edge edge, EdgePosition position) {
         if (edge instanceof BranchEdge) {
-            for (Edge inEdge : incomingEdges) {
-                if (inEdge instanceof BranchEdge) {
-                    return false;
+            if (position == EdgePosition.END) {
+                for (Edge inEdge : incomingEdges) {
+                    if (inEdge instanceof BranchEdge) {
+                        return false;
+                    }
                 }
             }
             return true;

@@ -5,12 +5,20 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.toolselector;
 
-import java.util.List;
-import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
-import nl.utwente.cs.fmt.cfsl.Symbol;
 import nl.utwente.cs.fmt.cfsl.gui.main.toolselector.tool.ToolController;
+import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
+import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
+import nl.utwente.cs.fmt.cfsl.model.BranchNode;
+import nl.utwente.cs.fmt.cfsl.model.ChildEdge;
+import nl.utwente.cs.fmt.cfsl.model.FlowEdge;
+import nl.utwente.cs.fmt.cfsl.model.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.ResolveAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.ResumeAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.StartAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.StartNode;
+import nl.utwente.cs.fmt.cfsl.model.StopNode;
 
 /**
  *
@@ -18,16 +26,19 @@ import nl.utwente.cs.fmt.cfsl.gui.main.toolselector.tool.ToolController;
  */
 public class ToolSelectorController extends Controller<VBox> {
     public ToolSelectorController() {
-        List<Node> tools = getView().getChildren();
-        tools.add(new ToolController(Symbol.ABSTRACT_SYNTAX_ELEMENT).getView());
-        tools.add(new ToolController(Symbol.START).getView());
-        tools.add(new ToolController(Symbol.STOP).getView());
-        tools.add(new ToolController(Symbol.BRANCH_NODE).getView());
-        tools.add(new ToolController(Symbol.CHILD).getView());
-        tools.add(new ToolController(Symbol.FLOW).getView());
-        tools.add(new ToolController(Symbol.BRANCH_EDGE).getView());
-        tools.add(new ToolController(Symbol.START_ABORT).getView());
-        tools.add(new ToolController(Symbol.RESOLVE_ABORT).getView());
-        tools.add(new ToolController(Symbol.RESUME_ABORT).getView());
+        addTool(AbstractSyntaxElement.class);
+        addTool(StartNode.class);
+        addTool(StopNode.class);
+        addTool(BranchNode.class);
+        addTool(ChildEdge.class);
+        addTool(FlowEdge.class);
+        addTool(BranchEdge.class);
+        addTool(StartAbortEdge.class);
+        addTool(ResolveAbortEdge.class);
+        addTool(ResumeAbortEdge.class);
+    }
+    
+    private void addTool(Class<? extends GraphElement> type) {
+        getView().getChildren().add(new ToolController(type).getView());
     }
 }

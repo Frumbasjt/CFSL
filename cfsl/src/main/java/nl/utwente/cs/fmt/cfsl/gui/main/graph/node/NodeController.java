@@ -14,18 +14,22 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController;
+import nl.utwente.cs.fmt.cfsl.model.Edge;
 import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.Node;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
  *
  * @author Richard
+ * @param <M>
  */
-public abstract class NodeController extends GraphElementController<StackPane> {
+public abstract class NodeController<M extends Node> extends GraphElementController<StackPane, M> {
     private final List<EdgeConnectorController> edgeConnectors = new ArrayList<>();
     protected final List<EdgePositionAnchorController> connectedEdgeAnchors = new ArrayList<>();
     
-    public NodeController() {
+    public NodeController(M model) {
+        super(model);
         TactilePane.setGoToForegroundOnContact(getView(), false);
     }
     
@@ -62,9 +66,28 @@ public abstract class NodeController extends GraphElementController<StackPane> {
     
     // PUBLIC METHODS
     
-    public abstract boolean canConnect(EdgeController edge, EdgePosition position);
+    public final boolean canConnect(EdgeController edge, EdgePosition position) {
+        return getModel().canConnect((Edge) edge.getModel(), position);
+    }
     
-    public abstract boolean connect(EdgeController edge, EdgePosition position);
+    public final boolean connect(EdgeController edge, EdgePosition position) {
+        boolean connected = getModel().connect((Edge) edge.getModel(), position);
+        if (connected) {
+            if (position == EdgePosition.START) {
+                connectedEdgeAnchors.add(edge.getStartAnchor());
+            } else {
+                connectedEdgeAnchors.add(edge.getEndAnchor());
+            }
+        }
+        return connected;
+    }
     
-    public abstract void disconnect(EdgeController edge, EdgePosition position);
+    public final void disconnect(EdgeController edge, EdgePosition position) {
+        getModel().disconnect((Edge) edge.getModel(), position);
+        if (position == EdgePosition.START) {
+            connectedEdgeAnchors.remove(edge.getStartAnchor());
+        } else {
+            connectedEdgeAnchors.remove(edge.getEndAnchor());
+        }
+    }
 }

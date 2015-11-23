@@ -5,14 +5,21 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort;
 
+import nl.utwente.cs.fmt.cfsl.model.ResumeAbortEdge;
+
 /**
  *
  * @author Richard
  */
-public class ResumeAbortController extends AbortController {
+public class ResumeAbortController extends AbortController<ResumeAbortEdge> {
     
-    public ResumeAbortController() {
-        super("resume abort:");
+    public ResumeAbortController(ResumeAbortEdge model) {
+        super(model, "resume abort:");
         getView().getStyleClass().add("resume-abort");
+    }
+    
+    @Override
+    public String getToolName() {
+        return "Resume Abort Edge";
     }
 }

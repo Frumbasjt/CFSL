@@ -18,6 +18,7 @@ import javafx.scene.shape.QuadCurve;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
+import nl.utwente.cs.fmt.cfsl.model.Edge;
 import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
@@ -25,8 +26,9 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  * Controller class for edges.
  * 
  * @author Richard
+ * @param <M>
  */
-public abstract class EdgeController<T> extends GraphElementController<Group> {
+public abstract class EdgeController<M extends Edge> extends GraphElementController<Group, M> {
     @FXML protected QuadCurve curve;
     
     protected final EdgePositionAnchorController startAnchor = new EdgePositionAnchorController(this, EdgePosition.START);
@@ -37,7 +39,8 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
     /**
      * Creates a new EdgeController.
      */
-    public EdgeController() {
+    public EdgeController(M model) {
+        super(model);
         initialize();
     }
     
@@ -46,8 +49,8 @@ public abstract class EdgeController<T> extends GraphElementController<Group> {
      * 
      * @param viewName the name of the FXML file that defines the View
      */
-    protected EdgeController(String viewName) {
-        super(viewName);
+    protected EdgeController(M model, String viewName) {
+        super(model, viewName);
         initialize();
     }
     

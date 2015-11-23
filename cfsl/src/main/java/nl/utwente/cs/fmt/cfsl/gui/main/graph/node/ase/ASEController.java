@@ -16,21 +16,18 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort.AbortController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
-import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
 
 /**
  *
  * @author Richard
  */
-public class ASEController extends NodeController {
+public class ASEController extends NodeController<AbstractSyntaxElement> {
     @FXML private StackPane identifierPane;
     @FXML private TextField identifierTextInput;
     
@@ -39,7 +36,9 @@ public class ASEController extends NodeController {
     private FlowController flowOut;
     private BranchEdgeController branchOut;
     
-    public ASEController() {
+    public ASEController(AbstractSyntaxElement model) {
+        super(model);
+        
         textInput = new MultiLineTextInputController("Abstract Syntax Element");
         ((StackPane)getView()).getChildren().add(textInput.getView());
         
@@ -77,8 +76,10 @@ public class ASEController extends NodeController {
         keyElement.addListener(o -> { 
             if (isKeyElement()) {
                 getView().getStyleClass().add("key-element");
+                getModel().setKeyElement(true);
             } else {
                 getView().getStyleClass().remove("key-element");
+                getModel().setKeyElement(false);
             }
         });
     }
@@ -111,6 +112,11 @@ public class ASEController extends NodeController {
 
     public BooleanProperty keyElementProperty() {
         return keyElement;
+    }
+    
+    @Override
+    public String getToolName() {
+        return "Abstract Syntax Element";
     }
     
     // GRAPH ELEMENT CONTROLLER IMPLEMENTATION
@@ -169,66 +175,5 @@ public class ASEController extends NodeController {
                 null);
         
         textInput.requestFocus();
-    }
-
-    // NODE CONTROLLER IMPLEMENTATION
-    
-    @Override
-    public boolean connect(EdgeController edge, EdgePosition position) {
-        if (position == EdgePosition.END) {
-            connectedEdgeAnchors.add(edge.getEndAnchor());
-            return true;
-        } else {
-            // Only one outgoing flow possible
-            if (edge instanceof FlowController) {
-                if (flowOut == null) {
-                    flowOut = (FlowController) edge;
-                    connectedEdgeAnchors.add(edge.getStartAnchor());
-                    return true;
-                }
-            }
-            // Only one outgoing branch possible
-            else if (edge instanceof BranchEdgeController) {
-                if (branchOut == null) {
-                    branchOut = (BranchEdgeController) edge;
-                    connectedEdgeAnchors.add(edge.getStartAnchor());
-                    return true;
-                }
-            }
-            // Infinite amount of other outgoing edges possible
-            else {
-                connectedEdgeAnchors.add(edge.getStartAnchor());
-                return true;
-            }
-            
-        }
-        return false;
-    }
-
-    @Override
-    public void disconnect(EdgeController edge, EdgePosition position) {
-        if (position == EdgePosition.END) {
-            connectedEdgeAnchors.remove(edge.getEndAnchor());
-        } else {
-            if (edge instanceof FlowController) {
-                if (flowOut == edge) {
-                    flowOut = null;
-                }
-            } else if (edge instanceof BranchEdgeController) {
-                if (branchOut == edge) {
-                    branchOut = null;
-                }
-            }
-            connectedEdgeAnchors.remove(edge.getStartAnchor());
-        }
-    }
-
-    @Override
-    public boolean canConnect(EdgeController edge, EdgePosition position) {
-        return position == EdgePosition.END 
-                || (edge instanceof FlowController && flowOut == null) 
-                || (edge instanceof BranchEdgeController && branchOut == null)
-                || (edge instanceof ChildController)
-                || (edge instanceof AbortController);
     }
 }

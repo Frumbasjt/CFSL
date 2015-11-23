@@ -13,8 +13,9 @@ public class StopNode extends Node {
 
     @Override
     public boolean connect(Edge edge, EdgePosition position) {
-        if (position == EdgePosition.END) {
+        if (position == EdgePosition.END && !(edge instanceof ChildEdge)) {
             incomingEdges.add(edge);
+            edge.setEndNode(this);
             return true;
         }
         return false;
@@ -22,7 +23,7 @@ public class StopNode extends Node {
 
     @Override
     public boolean canConnect(Edge edge, EdgePosition position) {
-        return position == EdgePosition.END;
+        return position == EdgePosition.END && !(edge instanceof ChildEdge);
     }
     
 }

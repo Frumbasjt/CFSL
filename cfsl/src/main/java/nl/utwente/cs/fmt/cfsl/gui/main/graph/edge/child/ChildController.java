@@ -7,21 +7,23 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.TextFieldAutoSizer;
+import nl.utwente.cs.fmt.cfsl.model.ChildEdge;
 
 /**
  *
  * @author Richard
  */
-public class ChildController extends EdgeController<Group> {
+public class ChildController extends EdgeController<ChildEdge> {
     @FXML private TextField textInput;
     @FXML private Rectangle origin;
     
-    public ChildController() {
+    public ChildController(ChildEdge model) {
+        super(model);
+        
         // Bind origin circle to start of curve
         origin.layoutXProperty().bind(curve.startXProperty().subtract(origin.widthProperty().divide(2)));
         origin.layoutYProperty().bind(curve.startYProperty().subtract(origin.heightProperty().divide(2)));
@@ -33,6 +35,15 @@ public class ChildController extends EdgeController<Group> {
         // Autosize text input
         TextFieldAutoSizer.addAutoSizeListener(textInput, 30);
     }
+    
+    // PROPERTIES
+    
+    @Override
+    public String getToolName() {
+        return "Child Edge";
+    }
+    
+    // HELP METHODS
     
     private void updateTextLocation() {
         Point2D middle = getMiddle();

@@ -7,16 +7,28 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start;
 
 import javafx.geometry.Pos;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
-import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.StartNode;
 
 /**
  *
  * @author Richard
  */
-public class StartController extends NodeController {
+public class StartController extends NodeController<StartNode> {
+
+    public StartController(StartNode model) {
+        super(model);
+    }
+    
+    // PROPERTIES
+    
+    @Override
+    public String getToolName() {
+        return "Start Node";
+    }
+    
+    // METHODS
 
     @Override
     public void afterAddedToGraph(GraphController canvas) {
@@ -45,24 +57,5 @@ public class StartController extends NodeController {
             Pos.CENTER_RIGHT, 
             connector.getView().radiusProperty(),
             null); 
-    }
-    
-    @Override
-    public boolean canConnect(EdgeController edge, EdgePosition position) {
-        return position == EdgePosition.START;
-    }
-
-    @Override
-    public boolean connect(EdgeController edge, EdgePosition position) {
-        if(position == EdgePosition.START) {
-            connectedEdgeAnchors.add(edge.getStartAnchor());
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void disconnect(EdgeController edge, EdgePosition position) {
-        connectedEdgeAnchors.remove(edge.getStartAnchor());
     }
 }

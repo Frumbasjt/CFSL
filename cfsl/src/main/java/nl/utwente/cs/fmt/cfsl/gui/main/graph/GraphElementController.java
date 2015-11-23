@@ -8,30 +8,35 @@ package nl.utwente.cs.fmt.cfsl.gui.main.graph;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
-import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
+import nl.utwente.cs.fmt.cfsl.model.GraphElement;
 
 /**
  *
  * @author Richard
  * @param <T>
+ * @param <M>
  */
-public abstract class GraphElementController<T> extends Controller{
+public abstract class GraphElementController<T extends Node, M extends GraphElement> extends Controller<T>{
     
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
             
     private GraphController graph;
+    private final M model;
     
-    public GraphElementController() {
+    public GraphElementController(M model) {
+        this.model = model;
         initialize();
     }
     
-    protected GraphElementController(String viewName) {
+    protected GraphElementController(M model, String viewName) {
         super(viewName);
+        this.model = model;
         initialize();
     }
     
@@ -48,6 +53,9 @@ public abstract class GraphElementController<T> extends Controller{
     
     // PROPERTIES
     
+    /**
+     * Whether the graph element is selected.
+     */
     private final BooleanProperty selected = new SimpleBooleanProperty() {
         @Override
         protected void invalidated() {
@@ -68,12 +76,33 @@ public abstract class GraphElementController<T> extends Controller{
         return selected;
     }
     
+    /**
+     * The model this controller controls.
+     * @return a GraphElement object
+     */
+    public M getModel() {
+        return model;
+    }
+    
+    /**
+     * The controller for the Graph this GraphElement is part of, if any.
+     * @return a GraphController object
+     */
+    public GraphController getGraph() {
+        return graph;
+    }
+    
+    /**
+     * Returns the name of the graph element as shown in the tool bar.
+     * @return a String object
+     */
+    public abstract String getToolName();
+    
     // METHODS
     
     // Called by GraphController
-    final void _addToGraph(GraphController graph) {
+    final void _setGraph(GraphController graph) {
         this.graph = graph;
-        afterAddedToGraph(graph);
     }
     
     /**
@@ -102,7 +131,7 @@ public abstract class GraphElementController<T> extends Controller{
         if (event.getCode() == KeyCode.DELETE) {
             if (graph != null) {
                 beforeRemovedFromGraph(graph);
-                graph.getContainer().getChildren().remove(getView());
+                graph.removeGraphElement(this);
             }
         }
     }
