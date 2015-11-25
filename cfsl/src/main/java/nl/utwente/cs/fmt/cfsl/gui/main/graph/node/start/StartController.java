@@ -18,14 +18,7 @@ import nl.utwente.cs.fmt.cfsl.model.StartNode;
 public class StartController extends NodeController<StartNode> {
 
     public StartController(StartNode model) {
-        super(model);
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Start Node";
+        super("Start Node", model);
     }
     
     // METHODS

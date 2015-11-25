@@ -22,17 +22,10 @@ public class BranchNodeController extends NodeController<BranchNode> {
     @FXML private TextField textInput;
 
     public BranchNodeController(BranchNode model) {
-        super(model);
+        super("Branch Node", model);
         
         // Control model
         model.conditionIdProperty().bind(textInput.textProperty());
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Branch Node";
     }
     
     // METHODS

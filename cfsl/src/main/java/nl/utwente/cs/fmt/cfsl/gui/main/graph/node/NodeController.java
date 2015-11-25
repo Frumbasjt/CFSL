@@ -28,8 +28,8 @@ public abstract class NodeController<M extends Node> extends GraphElementControl
     private final List<EdgeConnectorController> edgeConnectors = new ArrayList<>();
     protected final List<EdgePositionAnchorController> connectedEdgeAnchors = new ArrayList<>();
     
-    public NodeController(M model) {
-        super(model);
+    protected NodeController(String toolName, M model) {
+        super(toolName, model);
         TactilePane.setGoToForegroundOnContact(getView(), false);
     }
     

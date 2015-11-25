@@ -18,14 +18,7 @@ import nl.utwente.cs.fmt.cfsl.model.StopNode;
 public class StopController extends NodeController<StopNode> {
 
     public StopController(StopNode model) {
-        super(model);
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Stop Node";
+        super("Stop Node", model);
     }
     
     // METHODS

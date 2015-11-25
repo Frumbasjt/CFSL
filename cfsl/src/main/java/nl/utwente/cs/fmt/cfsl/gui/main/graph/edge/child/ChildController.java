@@ -22,7 +22,7 @@ public class ChildController extends EdgeController<ChildEdge> {
     @FXML private Rectangle origin;
     
     public ChildController(ChildEdge model) {
-        super(model);
+        super("Child Edge", model);
         
         // Bind origin circle to start of curve
         origin.layoutXProperty().bind(curve.startXProperty().subtract(origin.widthProperty().divide(2)));
@@ -36,13 +36,6 @@ public class ChildController extends EdgeController<ChildEdge> {
         TextFieldAutoSizer.addAutoSizeListener(textInput, 30);
         
         model.labelProperty().bind(textInput.textProperty());
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Child Edge";
     }
     
     // HELP METHODS

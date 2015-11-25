@@ -5,27 +5,39 @@
  */
 package nl.utwente.cs.fmt.cfsl.model;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+
 /**
  *
  * @author Richard
  */
 public class Edge extends GraphElement {
-    private Node startNode;
-    private Node endNode;
-    
+    private final ObjectProperty<Node> startNode = new ReadOnlyObjectWrapper<>();
+
     public Node getStartNode() {
+        return startNode.get();
+    }
+
+    void setStartNode(Node value) {
+        startNode.set(value);
+    }
+    
+    public ObjectProperty startNodeProperty() {
         return startNode;
     }
     
-    void setStartNode(Node startNode) {
-        this.startNode = startNode;
-    }
-    
+    private final ObjectProperty<Node> endNode = new ReadOnlyObjectWrapper<>();
+
     public Node getEndNode() {
-        return endNode;
+        return endNode.get();
+    }
+
+    void setEndNode(Node value) {
+        endNode.set(value);
     }
     
-    void setEndNode(Node endNode) {
-        this.endNode = endNode;
+    public ObjectProperty endNodeProperty() {
+        return endNode;
     }
 }

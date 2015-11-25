@@ -14,12 +14,7 @@ import nl.utwente.cs.fmt.cfsl.model.StartAbortEdge;
 public class StartAbortController extends AbortController<StartAbortEdge> {
 
     public StartAbortController(StartAbortEdge model) {
-        super(model, "abort:");
+        super("Introduce Abort Edge", model, "abort:");
         getView().getStyleClass().add("start-abort");
-    }
-    
-    @Override
-    public String getToolName() {
-        return "Start Abort Edge";
     }
 }

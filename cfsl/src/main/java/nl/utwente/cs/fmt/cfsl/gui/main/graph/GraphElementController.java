@@ -28,14 +28,17 @@ public abstract class GraphElementController<T extends Node, M extends GraphElem
             
     private GraphController graph;
     private final M model;
+    private final String toolName;
     
-    public GraphElementController(M model) {
+    protected GraphElementController(String toolName, M model) {
+        this.toolName = toolName;
         this.model = model;
         initialize();
     }
     
-    protected GraphElementController(M model, String viewName) {
+    protected GraphElementController(String toolName, M model, String viewName) {
         super(viewName);
+        this.toolName = toolName;
         this.model = model;
         initialize();
     }
@@ -96,7 +99,9 @@ public abstract class GraphElementController<T extends Node, M extends GraphElem
      * Returns the name of the graph element as shown in the tool bar.
      * @return a String object
      */
-    public abstract String getToolName();
+    public final String getToolName() {
+        return toolName;
+    }
     
     // METHODS
     

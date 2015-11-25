@@ -39,8 +39,8 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
     /**
      * Creates a new EdgeController.
      */
-    public EdgeController(M model) {
-        super(model);
+    protected EdgeController(String toolName, M model) {
+        super(toolName, model);
         initialize();
     }
     
@@ -49,8 +49,8 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
      * 
      * @param viewName the name of the FXML file that defines the View
      */
-    protected EdgeController(M model, String viewName) {
-        super(model, viewName);
+    protected EdgeController(String toolName, M model, String viewName) {
+        super(toolName, model, viewName);
         initialize();
     }
     

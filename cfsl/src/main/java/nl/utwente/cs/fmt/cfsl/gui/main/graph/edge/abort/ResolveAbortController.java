@@ -14,14 +14,7 @@ import nl.utwente.cs.fmt.cfsl.model.ResolveAbortEdge;
 public class ResolveAbortController extends AbortController<ResolveAbortEdge> {
     
     public ResolveAbortController(ResolveAbortEdge model) {
-        super(model, "resolve abort:");
+        super("Resolve Abort Edge", model, "resolve abort:");
         getView().getStyleClass().add("resolve-abort");
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Resolve Abort Edge";
     }
 }

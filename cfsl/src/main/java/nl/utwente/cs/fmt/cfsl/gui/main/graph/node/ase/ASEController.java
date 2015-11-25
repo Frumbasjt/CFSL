@@ -32,7 +32,7 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
     private final MultiLineTextInputController textInput;
     
     public ASEController(AbstractSyntaxElement model) {
-        super(model);
+        super("Abstract Syntax Element", model);
         
         textInput = new MultiLineTextInputController("Abstract Syntax Element");
         getView().getChildren().add(textInput.getView());
@@ -122,11 +122,6 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
 
     public BooleanProperty keyElementProperty() {
         return keyElement;
-    }
-    
-    @Override
-    public String getToolName() {
-        return "Abstract Syntax Element";
     }
     
     // GRAPH ELEMENT CONTROLLER IMPLEMENTATION

@@ -14,12 +14,7 @@ import nl.utwente.cs.fmt.cfsl.model.ResumeAbortEdge;
 public class ResumeAbortController extends AbortController<ResumeAbortEdge> {
     
     public ResumeAbortController(ResumeAbortEdge model) {
-        super(model, "resume abort:");
+        super("Resume Abort", model, "resume abort:");
         getView().getStyleClass().add("resume-abort");
-    }
-    
-    @Override
-    public String getToolName() {
-        return "Resume Abort Edge";
     }
 }

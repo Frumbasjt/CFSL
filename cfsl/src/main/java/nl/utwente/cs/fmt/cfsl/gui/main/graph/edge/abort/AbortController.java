@@ -35,8 +35,8 @@ public abstract class AbortController<M extends AbortEdge> extends EdgeControlle
      * @param model
      * @param label the label text that tells what kind of abort flow this edge represents
      */
-    protected AbortController(M model, String label) {
-        super(model, "AbortView");
+    protected AbortController(String toolName, M model, String label) {
+        super(toolName, model, "AbortView");
         
         this.label.setText(label);
         textInput = new MultiLineTextInputController("Reason");

@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
+import nl.utwente.cs.fmt.cfsl.model.BranchNode;
+import nl.utwente.cs.fmt.cfsl.model.Node;
 
 /**
  *
@@ -29,7 +31,7 @@ public class BranchEdgeController extends EdgeController<BranchEdge> {
      * @param model
      */
     public BranchEdgeController(BranchEdge model) {
-        super(model);
+        super("Branch Edge", model);
         
         // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
@@ -49,41 +51,19 @@ public class BranchEdgeController extends EdgeController<BranchEdge> {
             updateLabelLocation();
         });
         
-        textInput.editableProperty().bind(fromBranchNode);
-        fromBranchNode.addListener(o -> { 
-            if (isFromBranchNode()) {
+        // Model bindings
+        model.startNodeProperty().addListener(o -> { 
+            Node start = model.getStartNode();
+            if(start != null && start instanceof BranchNode) {
+                textInput.setEditable(true);
                 textInput.setText(null);
                 textInput.requestFocus();
             } else {
+                textInput.setEditable(false);
                 textInput.setText("branch");
             }
         });
-        
         model.valueProperty().bind(textInput.textProperty());
-    }
-    
-    // PROPERTIES
-    
-    /**
-     * Whether the start of this edge is connected to a branch node.
-     */
-    private final BooleanProperty fromBranchNode = new SimpleBooleanProperty(false);
-
-    public boolean isFromBranchNode() {
-        return fromBranchNode.get();
-    }
-
-    public void setFromBranchNode(boolean value) {
-        fromBranchNode.set(value);
-    }
-
-    public BooleanProperty fromBranchNodeProperty() {
-        return fromBranchNode;
-    }
-    
-    @Override
-    public String getToolName() {
-        return "Branch Edge";
     }
     
     // HELP METHODS

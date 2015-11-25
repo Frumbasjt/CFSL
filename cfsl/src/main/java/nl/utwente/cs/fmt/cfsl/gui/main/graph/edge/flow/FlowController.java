@@ -28,7 +28,7 @@ public class FlowController extends EdgeController<FlowEdge> {
      * @param model
      */
     public FlowController(FlowEdge model) {
-        super(model);
+        super("Flow Edge", model);
         
         // Bind head's location to curve's end
         headWrapper.layoutXProperty().bind(curve.endXProperty().subtract(headWrapper.widthProperty().divide(2)));
@@ -47,13 +47,6 @@ public class FlowController extends EdgeController<FlowEdge> {
         middleProperty().addListener(o -> { 
             updateLabelLocation();
         });
-    }
-    
-    // PROPERTIES
-    
-    @Override
-    public String getToolName() {
-        return "Flow Edge";
     }
     
     // HELP METHODS
