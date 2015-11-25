@@ -71,10 +71,8 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
         keyElement.addListener(o -> { 
             if (isKeyElement()) {
                 getView().getStyleClass().add("key-element");
-                getModel().setKeyElement(true);
             } else {
                 getView().getStyleClass().remove("key-element");
-                getModel().setKeyElement(false);
             }
         });
         
