@@ -11,17 +11,17 @@
    <children>
       <Polygon fill="WHITE" stroke="BLACK" strokeType="INSIDE">
         <points>
-          <Double fx:value="-40.0" />
+          <Double fx:value="-30.0" />
           <Double fx:value="0.0" />
           
           <Double fx:value="0.0" />
-          <Double fx:value="40.0" />
+          <Double fx:value="30.0" />
           
-          <Double fx:value="40.0" />
+          <Double fx:value="30.0" />
           <Double fx:value="0.0" />
           
           <Double fx:value="0.0" />
-          <Double fx:value="-40.0" />
+          <Double fx:value="-30.0" />
         </points>
       </Polygon>
       <HBox alignment="CENTER">

@@ -149,6 +149,9 @@ public class GraphController extends Controller<StackPane> {
      * @param graphElement the controller of the graph element
      */
     public void removeGraphElement(GraphElementController graphElement) {
+        if (getSelectedElement() == graphElement) {
+            setSelectedElement(null);
+        }
         model.remove(graphElement.getModel());
         getContainer().getChildren().remove(graphElement.getView());
     }

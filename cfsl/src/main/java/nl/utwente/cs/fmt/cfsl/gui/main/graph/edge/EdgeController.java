@@ -9,11 +9,11 @@ import java.util.List;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.QuadCurve;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
@@ -110,19 +110,19 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
         }, middleProperty()));
         
         // Move control anchor when position anchors move
-        startAnchor.getView().layoutXProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+        startAnchor.getView().layoutXProperty().addListener((observable, oldValue, newValue) -> {
             double deltaX = (double) newValue - (double) oldValue;
             controlAnchor.getView().setLayoutX(controlAnchor.getView().getLayoutX() + deltaX / 2);
         });
-        startAnchor.getView().layoutYProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+        startAnchor.getView().layoutYProperty().addListener((observable, oldValue, newValue) -> {
             double deltaY = (double) newValue - (double) oldValue;
             controlAnchor.getView().setLayoutY(controlAnchor.getView().getLayoutY() + deltaY / 2);
         });
-        endAnchor.getView().layoutXProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+        endAnchor.getView().layoutXProperty().addListener((observable, oldValue, newValue) -> {
             double deltaX = (double) newValue - (double) oldValue;
             controlAnchor.getView().setLayoutX(controlAnchor.getView().getLayoutX() + deltaX / 2);
         });
-        endAnchor.getView().layoutYProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
+        endAnchor.getView().layoutYProperty().addListener((observable, oldValue, newValue) -> {
             double deltaY = (double) newValue - (double) oldValue;
             controlAnchor.getView().setLayoutY(controlAnchor.getView().getLayoutY() + deltaY / 2);
         });
@@ -130,6 +130,22 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
         // Track position anchors
         graph.getContainer().getActiveNodes().add(startAnchor.getView());
         graph.getContainer().getActiveNodes().add(endAnchor.getView());
+        
+        // Create inivisible, thicker curve for selection purposes
+        QuadCurve invisibleCurve = new QuadCurve();
+        invisibleCurve.setOpacity(0);
+        invisibleCurve.setStrokeWidth(8);
+        invisibleCurve.setFill(Color.TRANSPARENT);
+        invisibleCurve.setStroke(Color.BLACK);
+        invisibleCurve.startXProperty().bind(curve.startXProperty());
+        invisibleCurve.startYProperty().bind(curve.startYProperty());
+        invisibleCurve.endXProperty().bind(curve.endXProperty());
+        invisibleCurve.endYProperty().bind(curve.endYProperty());
+        invisibleCurve.controlXProperty().bind(curve.controlXProperty());
+        invisibleCurve.controlYProperty().bind(curve.controlYProperty());
+        getView().getChildren().add(invisibleCurve);
+        invisibleCurve.toBack();
+        curve.toBack();
     }
     
     @Override

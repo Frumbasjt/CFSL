@@ -7,9 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="label" alignment="CENTER" text="Label" textAlignment="CENTER" />
+      <Label fx:id="label" alignment="CENTER" styleClass="tool-header" text="Label" textAlignment="CENTER" />
    </children>
 </VBox>
