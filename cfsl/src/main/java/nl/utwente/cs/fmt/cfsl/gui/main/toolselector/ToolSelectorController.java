@@ -12,6 +12,7 @@ import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
 import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
 import nl.utwente.cs.fmt.cfsl.model.BranchNode;
 import nl.utwente.cs.fmt.cfsl.model.ChildEdge;
+import nl.utwente.cs.fmt.cfsl.model.ExitEdge;
 import nl.utwente.cs.fmt.cfsl.model.FlowEdge;
 import nl.utwente.cs.fmt.cfsl.model.GraphElement;
 import nl.utwente.cs.fmt.cfsl.model.ResolveAbortEdge;
@@ -31,6 +32,7 @@ public class ToolSelectorController extends Controller<VBox> {
         addTool(StopNode.class);
         addTool(BranchNode.class);
         addTool(ChildEdge.class);
+        addTool(ExitEdge.class);
         addTool(FlowEdge.class);
         addTool(BranchEdge.class);
         addTool(StartAbortEdge.class);
