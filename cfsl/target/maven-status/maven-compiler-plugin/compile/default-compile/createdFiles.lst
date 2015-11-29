@@ -11,6 +11,7 @@ nl\utwente\cs\fmt\cfsl\model\AbstractSyntaxElement.class
 nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController$1.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\EdgePositionAnchorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\stop\StopController.class
+nl\utwente\cs\fmt\cfsl\gui\main\graph\node\abortstate\AbortStateController.class
 nl\utwente\cs\fmt\cfsl\gui\util\MultiLineTextInputController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\SelectionController.class
 nl\utwente\cs\fmt\cfsl\App.class
@@ -46,6 +47,7 @@ nl\utwente\cs\fmt\cfsl\model\ResumeAbortEdge.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\ToolSelectorController.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\edge\flow\FlowController.class
 nl\utwente\cs\fmt\cfsl\gui\main\toolselector\tool\ToolController.class
+nl\utwente\cs\fmt\cfsl\model\AbortStateNode.class
 nl\utwente\cs\fmt\cfsl\gui\main\graph\node\EdgeConnectorController.class
 nl\utwente\cs\fmt\cfsl\model\Edge.class
 nl\utwente\cs\fmt\cfsl\model\StartNode.class

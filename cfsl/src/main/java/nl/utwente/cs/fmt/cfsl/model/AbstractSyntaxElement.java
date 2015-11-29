@@ -85,6 +85,9 @@ public class AbstractSyntaxElement extends Node {
             // Else, connect
             outgoingEdges.add(edge);
         } else {
+            if (edge instanceof ExitEdge) {
+                return false;
+            }
             // ASE can have an infinite number of any incoming edges
             incomingEdges.add(edge);
         }
@@ -108,6 +111,9 @@ public class AbstractSyntaxElement extends Node {
                     }
                 }
             } 
+        } else if (edge instanceof ExitEdge) {
+            // Only outgoing exit edges are allowed
+            return false;
         }
         // Else, can connect
         return true;

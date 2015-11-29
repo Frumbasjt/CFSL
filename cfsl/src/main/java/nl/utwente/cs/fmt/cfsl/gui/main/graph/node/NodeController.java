@@ -40,6 +40,11 @@ public abstract class NodeController<M extends Node> extends GraphElementControl
     }
     
     @Override
+    protected void afterAddedToGraph(GraphController graph) {
+        getView().toBack();
+    }
+    
+    @Override
     protected void beforeRemovedFromGraph(GraphController graph) {
         for (EdgeConnectorController connector : edgeConnectors) {
             graph.getContainer().getActiveNodes().remove(connector.getView());

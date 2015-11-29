@@ -31,29 +31,31 @@ public class BranchNodeController extends NodeController<BranchNode> {
     // METHODS
 
     @Override
-    public void afterAddedToGraph(GraphController canvas) {
+    public void afterAddedToGraph(GraphController graph) {
+        super.afterAddedToGraph(graph);
+        
         EdgeConnectorController connector;
 
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
             Pos.TOP_CENTER, 
             null, 
             connector.getView().radiusProperty().multiply(-1));
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
             Pos.BOTTOM_CENTER, 
             null, 
             connector.getView().radiusProperty());
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
             Pos.CENTER_LEFT, 
             connector.getView().radiusProperty().multiply(-1), 
             null);
         
         connector = new EdgeConnectorController(this);
-        addEdgeConnector(connector, canvas.getContainer(),
+        addEdgeConnector(connector, graph.getContainer(),
             Pos.CENTER_RIGHT, 
             connector.getView().radiusProperty(),
             null); 
