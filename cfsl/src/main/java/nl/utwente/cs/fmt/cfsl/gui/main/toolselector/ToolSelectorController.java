@@ -8,6 +8,7 @@ package nl.utwente.cs.fmt.cfsl.gui.main.toolselector;
 import javafx.scene.layout.VBox;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.toolselector.tool.ToolController;
+import nl.utwente.cs.fmt.cfsl.model.AbortStateNode;
 import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
 import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
 import nl.utwente.cs.fmt.cfsl.model.BranchNode;
@@ -30,6 +31,7 @@ public class ToolSelectorController extends Controller<VBox> {
         addTool(AbstractSyntaxElement.class);
         addTool(StartNode.class);
         addTool(StopNode.class);
+        addTool(AbortStateNode.class);
         addTool(BranchNode.class);
         addTool(ChildEdge.class);
         addTool(ExitEdge.class);

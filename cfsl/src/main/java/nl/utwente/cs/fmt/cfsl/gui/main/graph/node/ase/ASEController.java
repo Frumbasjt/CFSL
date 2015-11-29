@@ -128,6 +128,8 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
     
     @Override
     public void afterAddedToGraph(GraphController graph) {
+        super.afterAddedToGraph(graph);
+        
         StackPane thisView = (StackPane) getView();
         EdgeConnectorController connector;
         

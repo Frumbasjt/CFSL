@@ -12,10 +12,12 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.branch.BranchEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.child.ChildController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.exit.ExitEdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.flow.FlowController;
+import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.abortstate.AbortStateController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch.BranchNodeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start.StartController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop.StopController;
+import nl.utwente.cs.fmt.cfsl.model.AbortStateNode;
 import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
 import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
 import nl.utwente.cs.fmt.cfsl.model.BranchNode;
@@ -57,6 +59,8 @@ public class GraphElementControllerFactory {
             return buildResolveAbort();
         if (clazz == ExitEdge.class)
             return buildExitEdge();
+        if (clazz == AbortStateNode.class)
+            return buildAbortState();
         else
             return null;
     }
@@ -103,5 +107,9 @@ public class GraphElementControllerFactory {
     
     public static ExitEdgeController buildExitEdge() {
         return new ExitEdgeController(new ExitEdge());
+    }
+    
+    public static AbortStateController buildAbortState() {
+        return new AbortStateController(new AbortStateNode());
     }
 }
