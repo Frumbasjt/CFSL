@@ -19,6 +19,7 @@ public class App extends Application {
         
         stage.setTitle("CFSL+");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

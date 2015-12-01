@@ -11,7 +11,7 @@
    <children>
       <Line fx:id="line1" endX="50.0" endY="50.0" stroke="RED" strokeLineCap="BUTT" strokeMiterLimit="0.0" strokeWidth="2.0" />
       <Line fx:id="line2" endX="50.0" startY="50.0" stroke="RED" strokeLineCap="BUTT" strokeMiterLimit="0.0" strokeWidth="2.0" />
-      <Circle fx:id="circle" fill="#ffffff00" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="circle" fill="#ffffff00" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
    <styleClass>
       <String fx:value="node" />
