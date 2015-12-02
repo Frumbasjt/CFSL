@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.TextFieldAutoSizer;
-import nl.utwente.cs.fmt.cfsl.model.ChildEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ChildEdge;
 
 /**
  *

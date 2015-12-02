@@ -18,8 +18,9 @@ import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.model.Graph;
-import nl.utwente.cs.fmt.cfsl.model.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.Graph;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.CfslPlusGraph;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -34,10 +35,10 @@ public class GraphController extends Controller<StackPane> {
     private final Graph model;
     
     public GraphController() {
-        this(new Graph());
+        this(new CfslPlusGraph());
     }
     
-    public GraphController(Graph model) {
+    public GraphController(CfslPlusGraph model) {
         this.model = model;
         
         container.setProximityThreshold(10);

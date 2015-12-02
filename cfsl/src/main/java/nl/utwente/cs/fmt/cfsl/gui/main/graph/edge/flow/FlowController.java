@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
-import nl.utwente.cs.fmt.cfsl.model.FlowEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.FlowEdge;
 
 /**
  * Controller class for flow edges.

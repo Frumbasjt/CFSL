@@ -14,9 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
-import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
-import nl.utwente.cs.fmt.cfsl.model.BranchNode;
-import nl.utwente.cs.fmt.cfsl.model.Node;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.Node;
 
 /**
  *

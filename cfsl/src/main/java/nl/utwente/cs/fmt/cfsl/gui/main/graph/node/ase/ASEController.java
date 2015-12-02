@@ -19,7 +19,7 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
-import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbstractSyntaxElement;
 
 /**
  *

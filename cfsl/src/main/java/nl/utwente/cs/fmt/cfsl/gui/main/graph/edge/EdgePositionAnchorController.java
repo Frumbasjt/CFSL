@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
-import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.EdgeSide;
 import nl.utwente.ewi.caes.tactilefx.control.Anchor;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
@@ -26,7 +26,7 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
  * @author Richard
  */
 public class EdgePositionAnchorController extends EdgeAnchorController {
-    private final EdgePosition position;
+    private final EdgeSide position;
     
     /**
      * Creates a new EdgeCurvePositionAnchorController that manipulates the given
@@ -35,7 +35,7 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
      * @param edge the edge this anchor manipulates. May not be null.
      * @param position the position of the edge that this anchor manipulates
      */
-    public EdgePositionAnchorController(EdgeController edge, EdgePosition position) {
+    public EdgePositionAnchorController(EdgeController edge, EdgeSide position) {
         super(edge);
         
         edge.selectedProperty().addListener(o -> { 
@@ -68,7 +68,7 @@ public class EdgePositionAnchorController extends EdgeAnchorController {
         return connector;
     }
     
-    public EdgePosition getPosition() {
+    public EdgeSide getPosition() {
         return this.position;
     }
     

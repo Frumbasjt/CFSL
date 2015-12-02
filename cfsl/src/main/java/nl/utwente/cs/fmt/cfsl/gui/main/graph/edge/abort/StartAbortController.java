@@ -5,7 +5,7 @@
  */
 package nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.abort;
 
-import nl.utwente.cs.fmt.cfsl.model.StartAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.StartAbortEdge;
 
 /**
  *

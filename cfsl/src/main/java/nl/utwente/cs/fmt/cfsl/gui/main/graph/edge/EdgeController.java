@@ -18,8 +18,8 @@ import javafx.scene.shape.QuadCurve;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
-import nl.utwente.cs.fmt.cfsl.model.Edge;
-import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.Edge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.EdgeSide;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -31,8 +31,8 @@ import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 public abstract class EdgeController<M extends Edge> extends GraphElementController<Group, M> {
     @FXML protected QuadCurve curve;
     
-    protected final EdgePositionAnchorController startAnchor = new EdgePositionAnchorController(this, EdgePosition.START);
-    protected final EdgePositionAnchorController endAnchor = new EdgePositionAnchorController(this, EdgePosition.END);
+    protected final EdgePositionAnchorController startAnchor = new EdgePositionAnchorController(this, EdgeSide.START);
+    protected final EdgePositionAnchorController endAnchor = new EdgePositionAnchorController(this, EdgeSide.END);
     protected final EdgeCurveControlAnchorController controlAnchor = new EdgeCurveControlAnchorController(this);
     protected final EdgeCurveControlLineController controlLine = new EdgeCurveControlLineController(controlAnchor);
     
@@ -164,8 +164,8 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
     
     // METHODS
     
-    public final void disconnectAnchor(EdgePosition position) {
-        if (position == EdgePosition.START) {
+    public final void disconnectAnchor(EdgeSide position) {
+        if (position == EdgeSide.START) {
             TactilePane.setAnchor(startAnchor.getView(), null);
         } else {
             TactilePane.setAnchor(endAnchor.getView(), null);

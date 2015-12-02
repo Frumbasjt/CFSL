@@ -9,7 +9,7 @@ import javafx.geometry.Pos;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.model.StartNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.StartNode;
 
 /**
  *

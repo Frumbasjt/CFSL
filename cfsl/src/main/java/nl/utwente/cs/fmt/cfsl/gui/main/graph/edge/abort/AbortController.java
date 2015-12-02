@@ -15,7 +15,7 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.util.MultiLineTextInputController;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
-import nl.utwente.cs.fmt.cfsl.model.AbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbortEdge;
 
 /**
  *

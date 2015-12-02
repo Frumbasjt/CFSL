@@ -14,7 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
-import nl.utwente.cs.fmt.cfsl.model.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.GraphElement;
 
 /**
  *

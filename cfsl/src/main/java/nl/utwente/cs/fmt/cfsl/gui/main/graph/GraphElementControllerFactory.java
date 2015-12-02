@@ -17,19 +17,19 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.branch.BranchNodeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.start.StartController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.stop.StopController;
-import nl.utwente.cs.fmt.cfsl.model.AbortStateNode;
-import nl.utwente.cs.fmt.cfsl.model.AbstractSyntaxElement;
-import nl.utwente.cs.fmt.cfsl.model.BranchEdge;
-import nl.utwente.cs.fmt.cfsl.model.BranchNode;
-import nl.utwente.cs.fmt.cfsl.model.ChildEdge;
-import nl.utwente.cs.fmt.cfsl.model.ExitEdge;
-import nl.utwente.cs.fmt.cfsl.model.FlowEdge;
-import nl.utwente.cs.fmt.cfsl.model.GraphElement;
-import nl.utwente.cs.fmt.cfsl.model.ResolveAbortEdge;
-import nl.utwente.cs.fmt.cfsl.model.ResumeAbortEdge;
-import nl.utwente.cs.fmt.cfsl.model.StartAbortEdge;
-import nl.utwente.cs.fmt.cfsl.model.StartNode;
-import nl.utwente.cs.fmt.cfsl.model.StopNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbortStateNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbstractSyntaxElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ChildEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ExitEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.FlowEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ResolveAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ResumeAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.StartAbortEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.StartNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.StopNode;
 
 /**
  *

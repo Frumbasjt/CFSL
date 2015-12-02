@@ -14,9 +14,9 @@ import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgePositionAnchorController;
-import nl.utwente.cs.fmt.cfsl.model.Edge;
-import nl.utwente.cs.fmt.cfsl.model.EdgePosition;
-import nl.utwente.cs.fmt.cfsl.model.Node;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.Edge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.EdgeSide;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.Node;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
 
 /**
@@ -71,14 +71,14 @@ public abstract class NodeController<M extends Node> extends GraphElementControl
     
     // PUBLIC METHODS
     
-    public final boolean canConnect(EdgeController edge, EdgePosition position) {
+    public final boolean canConnect(EdgeController edge, EdgeSide position) {
         return getModel().canConnect((Edge) edge.getModel(), position);
     }
     
-    public final boolean connect(EdgeController edge, EdgePosition position) {
+    public final boolean connect(EdgeController edge, EdgeSide position) {
         boolean connected = getModel().connect((Edge) edge.getModel(), position);
         if (connected) {
-            if (position == EdgePosition.START) {
+            if (position == EdgeSide.START) {
                 connectedEdgeAnchors.add(edge.getStartAnchor());
             } else {
                 connectedEdgeAnchors.add(edge.getEndAnchor());
@@ -87,9 +87,9 @@ public abstract class NodeController<M extends Node> extends GraphElementControl
         return connected;
     }
     
-    public final void disconnect(EdgeController edge, EdgePosition position) {
+    public final void disconnect(EdgeController edge, EdgeSide position) {
         getModel().disconnect((Edge) edge.getModel(), position);
-        if (position == EdgePosition.START) {
+        if (position == EdgeSide.START) {
             connectedEdgeAnchors.remove(edge.getStartAnchor());
         } else {
             connectedEdgeAnchors.remove(edge.getEndAnchor());

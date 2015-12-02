@@ -15,7 +15,7 @@ import nl.utwente.cs.fmt.cfsl.gui.main.MainController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphElementControllerFactory;
-import nl.utwente.cs.fmt.cfsl.model.GraphElement;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.GraphElement;
 
 /**
  *

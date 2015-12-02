@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.edge.EdgeController;
-import nl.utwente.cs.fmt.cfsl.model.ExitEdge;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.ExitEdge;
 
 /**
  *

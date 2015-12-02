@@ -14,7 +14,7 @@ import javafx.scene.shape.Line;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.EdgeConnectorController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.model.AbortStateNode;
+import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbortStateNode;
 
 /**
  *
