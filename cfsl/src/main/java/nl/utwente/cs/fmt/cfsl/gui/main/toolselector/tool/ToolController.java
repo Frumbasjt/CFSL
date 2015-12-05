@@ -67,7 +67,7 @@ public class ToolController extends Controller<VBox> {
         graphElement.getView().setTranslateX(0);
         graphElement.getView().setTranslateY(0);
         
-        GraphController canvas = MainController.getInstance().getCanvas();
+        GraphController canvas = MainController.getInstance().getGraph();
         Point2D point = canvas.getView().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
         if (canvas.getView().getBoundsInLocal().contains(point)) {
             canvas.addNewGraphElement(type, point.getX() - localX, point.getY() - localY);

@@ -128,7 +128,7 @@ public abstract class GraphElementController<T extends Node, M extends GraphElem
         
     private void mousePressed(MouseEvent event) {
         setSelected(true);
-        MainController.getInstance().getCanvas().setSelectedElement(this);
+        MainController.getInstance().getGraph().setSelectedElement(this);
         event.consume();
     }
     

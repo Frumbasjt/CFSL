@@ -34,6 +34,16 @@ public class BranchNode extends Node {
         return conditionId;
     }
     
+    public AbstractSyntaxElement getBranchSource() {
+        for (Edge inEdge : getIncomingEdgesUnmodifiable()) {
+            Node source = inEdge.getStartNode();
+            if (source != null && source instanceof AbstractSyntaxElement) {
+                return (AbstractSyntaxElement) source;
+            }
+        }
+        return null;
+    }
+    
     // METHODS
 
     @Override

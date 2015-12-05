@@ -31,4 +31,13 @@ public class BranchEdge extends Edge {
         return value;
     }
     
+    /**
+     * Whether this edge represents the default branch. Convenience method for
+     * getValue().equals("default").
+     * 
+     * @return whether this edge represents the default branch
+     */
+    public boolean isDefault() {
+        return getValue().equals("default");
+    }
 }

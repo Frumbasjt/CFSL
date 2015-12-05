@@ -18,7 +18,6 @@ import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.util.Utils;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.ase.ASEController;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.node.NodeController;
-import nl.utwente.cs.fmt.cfsl.model.cfslplus.Graph;
 import nl.utwente.cs.fmt.cfsl.model.cfslplus.GraphElement;
 import nl.utwente.cs.fmt.cfsl.model.cfslplus.CfslPlusGraph;
 import nl.utwente.ewi.caes.tactilefx.control.TactilePane;
@@ -32,7 +31,7 @@ public class GraphController extends Controller<StackPane> {
     @FXML private TactilePane container;
     
     private final SelectionController selectionBox;
-    private final Graph model;
+    private final CfslPlusGraph model;
     
     public GraphController() {
         this(new CfslPlusGraph());
@@ -110,6 +109,14 @@ public class GraphController extends Controller<StackPane> {
 
     public ObjectProperty keyElementProperty() {
         return keyElement;
+    }
+    
+    /**
+     * Returns the Graph object that this controller controls.
+     * @return a Graph object
+     */
+    public CfslPlusGraph getModel() {
+        return model;
     }
     
     // PUBLIC METHODS

@@ -5,10 +5,11 @@
  */
 package nl.utwente.cs.fmt.cfsl.model.cfslplus;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbstractSyntaxElement;
-import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchNode;
+import java.util.TreeMap;
 
 /**
  *
@@ -17,6 +18,7 @@ import nl.utwente.cs.fmt.cfsl.model.cfslplus.BranchNode;
 public abstract class Graph {
     private final Set<Node> nodes = new HashSet<>();
     private final Set<Edge> edges = new HashSet<>();
+    private final Map<Integer, GraphElement> elementMap = new TreeMap<>();
     
     public void add(GraphElement graphElement) {
         if (graphElement instanceof Node) {
@@ -24,6 +26,7 @@ public abstract class Graph {
         } else if (graphElement instanceof Edge) {
             edges.add((Edge) graphElement);
         }
+        elementMap.put(graphElement.getElementNumber(), graphElement);
     }
     
     public void remove(GraphElement graphElement) {
@@ -32,13 +35,18 @@ public abstract class Graph {
         } else if (graphElement instanceof Edge) {
             edges.remove((Edge) graphElement);
         }
+        elementMap.remove(graphElement.getElementNumber(), graphElement);
     }
     
-    public Set<Node> getNodes() {
-        return nodes;
+    public Set<Node> getNodesUnmodifiable() {
+        return Collections.unmodifiableSet(nodes);
     }
     
-    public Set<Edge> getEdges() {
-        return edges;
+    public Set<Edge> getEdgesUnmodifiable() {
+        return Collections.unmodifiableSet(edges);
+    }
+    
+    public GraphElement getElement(int elementNumber) {
+        return elementMap.get(elementNumber);
     }
 }

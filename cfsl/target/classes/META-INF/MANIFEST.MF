@@ -1,6 +1,18 @@
 Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
-Created-By: Apache Maven
-Built-By: Richard
-Build-Jdk: 1.8.0_31
+Class-Path: ../lib/OSXAdapter.jar ../lib/junit-4_8_2.jar ../lib/jgraph
+ -5_13_0.jar ../lib/rsyntaxtextarea.jar ../lib/ltl2buchi-2010-12.jar .
+ ./lib/gnuprologjava-0.2.6.jar ../lib/jgoodies-looks-2.4.1.jar ../lib/
+ jgoodies-common-1.2.0.jar ../lib/groovy/asm-4.0.jar ../lib/groovy/asm
+ -analysis-4.0.jar ../lib/groovy/asm-tree-4.0.jar ../lib/groovy/groovy
+ -2.0.5.jar ../lib/io/epsgraphics-1.2.jar ../lib/io/itextpdf-5.3.2.jar
+  ../lib/io/jaxb-gxl-1_0.jar ../lib/opencsv-2.3.jar ../lib/io/com.alex
+ merz.graphviz.jar ../lib/jaxfront/jaxfront-core.jar ../lib/jaxfront/j
+ axfront-swing.jar ../lib/xerces-2_11_0/xercesImpl.jar ../lib/xerces-2
+ _11_0/resolver.jar ../lib/xerces-2_11_0/xml-apis.jar ../lib/emf-2_7_0
+ /org.eclipse.emf.common_2.7.0.v20120127-1122.jar ../lib/emf-2_7_0/org
+ .eclipse.emf.ecore_2.7.0.v20120127-1122.jar ../lib/emf-2_7_0/org.ecli
+ pse.emf.ecore.xmi_2.7.0.v20120127-1122.jar ../lib/args4j-2.0.26.jar .
+ ./lib/antlr-3.4-complete.jar ../lib/antlrworks-1.4.2.jar ../lib/org.e
+ clipse.jdt.annotation_1.1.0.v20140129-1625.jar
+Created-By: 1.8.0_25 (Oracle Corporation)
 

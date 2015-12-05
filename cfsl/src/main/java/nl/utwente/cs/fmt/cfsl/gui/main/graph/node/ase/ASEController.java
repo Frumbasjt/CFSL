@@ -47,7 +47,7 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
         contextMenu.getItems().add(item1);
         
         MenuItem item2 = new MenuItem("Make key element");
-        item2.setOnAction(e -> MainController.getInstance().getCanvas().setKeyElement(this));
+        item2.setOnAction(e -> MainController.getInstance().getGraph().setKeyElement(this));
         contextMenu.getItems().add(item2);
         
         getView().setOnMouseClicked(e -> { 
@@ -80,8 +80,10 @@ public class ASEController extends NodeController<AbstractSyntaxElement> {
         model.keyElementProperty().bind(keyElement);
         model.idProperty().bind(identifierTextInput.textProperty());
         textInput.totalTextProperty().addListener(o -> { 
+            
             model.getLabels().clear();
             String labels[] = textInput.getTotalText().split("\n");
+            
             for (int i = 0; i < labels.length; i++) {
                 model.getLabels().add(labels[i]);
             }

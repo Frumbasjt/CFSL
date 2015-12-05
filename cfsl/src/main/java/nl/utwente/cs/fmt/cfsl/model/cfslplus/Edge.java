@@ -13,7 +13,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
  * 
  * @author Richard
  */
-public abstract class Edge implements GraphElement {
+public abstract class Edge extends GraphElement {
     
     /**
      * The node that is the origin of this edge. This may be null while a user is still drawing.

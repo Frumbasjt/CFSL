@@ -15,21 +15,21 @@ import java.util.Set;
 public class CfslPlusGraph extends Graph {
     
     private void checkState() {
-        for (Edge edge : getEdges()) {
+        for (Edge edge : getEdgesUnmodifiable()) {
             if (edge.getStartNode() == null || edge.getEndNode() == null) {
                 throw new IllegalStateException("Not all edges in the graph are connected");
             }
         }
         Set<String> ids = new HashSet<>();
-        for (Node node : getNodes()) {
+        for (Node node : getNodesUnmodifiable()) {
             if (node instanceof AbstractSyntaxElement) {
                 AbstractSyntaxElement aseNode = (AbstractSyntaxElement) node;
                 if (aseNode.getId() != null && !ids.add(aseNode.getId())) {
-                    throw new IllegalStateException("More than one abstract syntax element with id " + aseNode.getId() + " defined");
+                    throw new IllegalStateException("More than one abstract syntax element with id " + aseNode.getElementNumber() + " defined");
                 }
             }
         }
-        for (Node node : getNodes()) {
+        for (Node node : getNodesUnmodifiable()) {
             if (node instanceof BranchNode) {
                 BranchNode branchNode = (BranchNode) node;
                 if (!ids.contains(branchNode.getConditionId())) {

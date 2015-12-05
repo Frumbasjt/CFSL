@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Richard
  */
-public abstract class Node implements GraphElement {
+public abstract class Node extends GraphElement {
     private final Set<Edge> outgoingEdges = new HashSet<>();
     private final Set<Edge> incomingEdges = new HashSet<>();
     
