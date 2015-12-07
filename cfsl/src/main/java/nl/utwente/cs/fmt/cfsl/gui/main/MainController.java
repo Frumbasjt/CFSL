@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import nl.utwente.cs.fmt.cfsl.compiler.CfslPlusCompiler;
 import nl.utwente.cs.fmt.cfsl.gui.Controller;
 import nl.utwente.cs.fmt.cfsl.gui.main.graph.GraphController;
@@ -56,19 +57,19 @@ public class MainController extends Controller<BorderPane>{
         CfslPlusCompiler compiler = new CfslPlusCompiler();
         PlainGraph cfslGraph = compiler.compile(graphController.getModel());
         
-//        Exportable exportable = new Exportable(cfslGraph);
-//        Exporter exporter = Exporters.getExporter(FileType.GRAMMAR);
-//        try {
-//            exporter.doExport(exportable, new File("C://Users//Richard//Desktop//test"), FileType.GRAMMAR);
-//        } catch (PortException ex) {
-//            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export diagram to GROOVE");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CADP automata files", "aut"));
+        fileChooser.setInitialFileName("diagram.aut");
+        File file = fileChooser.showSaveDialog(getView().getScene().getWindow());
         
-        try {
-            AutIO io = new AutIO();
-            io.saveGraph(cfslGraph, new File("C://Users//Richard//Desktop//test.aut"));
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
+        if (file != null) {
+            try {
+                AutIO io = new AutIO();
+                io.saveGraph(cfslGraph, file);
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }
 }

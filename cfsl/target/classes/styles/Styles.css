@@ -96,7 +96,19 @@
 
 // Child
 
+.edge.child .start,
+.edge.child .end {
+    -fx-stroke: #666666;
+    -fx-fill: #666666;
+}
+
 .edge.child .edge-curve {
+    -fx-stroke: #cccccc;
+}
+
+// Exit
+
+.edge.exit .edge-curve {
     -fx-stroke: #cccccc;
     -fx-stroke-dash-array: 5 5;
 }

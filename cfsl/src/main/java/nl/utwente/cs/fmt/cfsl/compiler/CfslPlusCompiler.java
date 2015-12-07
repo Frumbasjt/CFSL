@@ -9,13 +9,10 @@ import groove.graph.GraphRole;
 import groove.graph.plain.PlainEdge;
 import groove.graph.plain.PlainGraph;
 import groove.graph.plain.PlainNode;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 import nl.utwente.cs.fmt.cfsl.model.cfsl.CfslLabels;
 import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbortEdge;
 import nl.utwente.cs.fmt.cfsl.model.cfslplus.AbortStateNode;
@@ -44,10 +41,9 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
     private PlainGraph result;
     private Map<Node, PlainNode> nodeMap;
     private Map<String, AbstractSyntaxElement> aseById;
+    
     @Override
     public PlainGraph compile(CfslPlusGraph graph) {
-        System.out.println("compiling");
-        
         result = new PlainGraph("", GraphRole.NONE);
         nodeMap = new HashMap<>();
         aseById = new HashMap<>();
@@ -85,13 +81,13 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
         
         for (AbstractSyntaxElement ase : abstractSyntaxElements) {
             addNode(ase);
-            System.out.println("Created new ASE");
+            
+            for (String label : ase.getLabels()) {
+                addSelfEdge(ase, label);
+            }
             if (ase.isKeyElement()) {
                 addSelfEdge(ase, CfslLabels.KEY_ELEMENT_NODE_LABEL);
                 keyElement = ase;
-            }
-            for (String label : ase.getLabels()) {
-                addSelfEdge(ase, label);
             }
             if (ase.getId() != null && ase.getId().length() > 0) {
                 aseById.put(ase.getId(), ase);
@@ -104,27 +100,23 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
             if (exitEdges.isEmpty()) {
                 addEdge(keyElement, CfslLabels.EXIT_LABEL, stopNode);
             }
-            System.out.println("Created new stop node");
         }
         
         for (BranchNode branchNode : branchNodes) {
             PlainNode source = nodeMap.get(branchNode.getBranchSource());
+            PlainNode condition = nodeMap.get(aseById.get(branchNode.getConditionId()));
             
             for (Edge edge : branchNode.getOutgoingEdgesUnmodifiable()) {
                 BranchEdge branchEdge = (BranchEdge) edge;
                 PlainNode end = nodeMap.get(branchEdge.getEndNode());
-                PlainNode condition = nodeMap.get(aseById.get(branchNode.getConditionId()));
                 
-                // Build branch node
                 PlainNode cfslNode = addNode();
                 addSelfEdge(cfslNode, CfslLabels.BRANCH_NODE_LABEL);
                 
-                // Add branch, flow and condition edges
                 addEdge(source, CfslLabels.BRANCH_LABEL, cfslNode);
                 addEdge(cfslNode, CfslLabels.FLOW_LABEL, end);
                 addEdge(cfslNode, CfslLabels.CONDITION_LABEL, condition);
                 
-                // Add branchOn label or branchDefault label
                 if (branchEdge.isDefault()) {
                     addSelfEdge(cfslNode, CfslLabels.BRANCH_DEFAULT_LABEL);
                 } else {
@@ -132,8 +124,14 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
                     if (branchOn == null) {
                         branchOn = addNode();
                         addSelfEdge(branchOn, branchEdge.getValue());
+                        addEdge(cfslNode, CfslLabels.BRANCH_ON_LABEL, branchOn);
+                    } else {
+                        PlainNode variableNode = addNode();
+                        addSelfEdge(variableNode, CfslLabels.VARIABLE_NODE_LABEL);
+                        addEdge(cfslNode, CfslLabels.BRANCH_ON_LABEL, variableNode);
+                        addEdge(branchOn, CfslLabels.VALUE_LABEL, variableNode);
                     }
-                    addEdge(cfslNode, CfslLabels.BRANCH_ON_LABEL, branchOn);
+                    
                 }
             }
         }
@@ -151,17 +149,18 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
         }
         
         for (AbortEdge edge : abortEdges) {
+            PlainNode cfslNode = null;
             if (edge.getEndNode() instanceof AbortStateNode) {
-                
+                cfslNode = addNode(edge.getEndNode());
             } else {
-                PlainNode cfslNode = addNode();
-                addSelfEdge(cfslNode, CfslLabels.ABORT_NODE_LABEL);
-                
-                addEdge(nodeMap.get(edge.getStartNode()), getAbortLabel(edge), cfslNode);
-                List<PlainNode> reasonNodes = parseAbortReason(edge.getReason());
-                for (PlainNode reasonNode : reasonNodes) {
-                    addEdge(cfslNode, CfslLabels.REASON_LABEL, reasonNode);
-                }
+                cfslNode = addNode();
+            }
+            addSelfEdge(cfslNode, CfslLabels.ABORT_NODE_LABEL);
+
+            addEdge(nodeMap.get(edge.getStartNode()), getAbortLabel(edge), cfslNode);
+            parseAbortReason(cfslNode, CfslLabels.REASON_LABEL, edge.getReason(), true);
+
+            if (!(edge.getEndNode() instanceof AbortStateNode)) {
                 addEdge(cfslNode, CfslLabels.FLOW_LABEL, nodeMap.get(edge.getEndNode()));
             }
         }
@@ -184,7 +183,6 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
     }
     
     private PlainEdge addSelfEdge(PlainNode node, String label) {
-        System.out.println("Created new self edge with label " + label);
         return result.addEdge(node, label, node);
     }
     
@@ -193,70 +191,112 @@ public class CfslPlusCompiler implements Compiler<CfslPlusGraph, PlainGraph> {
     }
     
     private PlainEdge addEdge(PlainNode from, String label, PlainNode to) {
-        System.out.println("Created new edge from node " + from + " to node " + to + " with label " + label);
         return result.addEdge(from, label, to);
     }
     
-    private List<PlainNode> parseAbortReason(String reason) {
-        List<PlainNode> result = new ArrayList<>();
+    private void parseAbortReason(PlainNode parent, String parentLabel, String reason, boolean depth0) {
+        if (reason == null) return;
+        
+        reason = reason.replaceAll("\n", ",");
+        reason = reason.replaceAll(",,", ",");
+        reason = reason.replaceAll("\\s", "");
         
         int lastI = 0;
-        Stack<PlainNode> parentNodes = new Stack<>();
-        String parentLabel = null;
+        int scope = 0;
+        String parentReasonPart = null;
+        String childReasonPart = null;
+        String customLabel = null;
+        boolean foundValue = false;
+        
         for (int i = 0; i < reason.length(); i++) {
-            switch(reason.charAt(i)) {
-                case ',':
-                    if (parentNodes.isEmpty()) {
-                        Node reasonNode = aseById.get(reason.substring(lastI, i));
-                        if (reasonNode != null) {
-                            result.add(nodeMap.get(reasonNode));
-                            lastI = i + 1;
-                            break;
-                        }
-                    }
-                case '(':
-                    PlainNode parentNode = addNode();
-                    addSelfEdge(parentNode, reason.substring(lastI, i));
+            char c = reason.charAt(i);
+            
+            if (c == ',' && scope == 0) {
+                if (parentReasonPart == null) {
+                    parentReasonPart = reason.substring(lastI, i);
+                }
+                
+                PlainNode reasonNode = null;
+                if (depth0 && childReasonPart == null) {
+                    reasonNode = nodeMap.get(aseById.get(parentReasonPart));
+                }
+                if (reasonNode == null) {
+                    reasonNode = addNode();
+                    addSelfEdge(reasonNode, parentReasonPart);
+                }
+                
+                if (customLabel == null) {
+                    addEdge(parent, parentLabel, reasonNode);
+                } else {
+                    addEdge(parent, customLabel, reasonNode);
+                }
+                
+                if (foundValue) {
+                    PlainNode valueNode = nodeMap.get(aseById.get(reason.substring(lastI, i)));
+                    PlainNode variableNode = addNode();
+                    addSelfEdge(variableNode, CfslLabels.VARIABLE_NODE_LABEL);
+                    addEdge(reasonNode, CfslLabels.VALUE_LABEL, variableNode);
+                    addEdge(valueNode, CfslLabels.VALUE_LABEL, variableNode);
+                }
+                
+                parseAbortReason(reasonNode, CfslLabels.CHILD_LABEL, childReasonPart, false);
+                
+                // Reset
+                parentReasonPart = null;
+                childReasonPart = null;
+                customLabel = null;
+                foundValue = false;
+                
+                lastI = i + 1;
+            } else if (c == '(') {
+                if (scope == 0) {
+                    parentReasonPart = reason.substring(lastI, i);
                     lastI = i + 1;
-
-                    if (parentNodes.isEmpty()) {
-                        result.add(parentNode);
-                    }
-
-                    if (parentLabel != null) {
-                        addEdge(parentNodes.peek(), parentLabel, parentNode);
-                    }
-
-                    parentNodes.push(parentNode);
-                    break;
-                case ')':
-                    PlainNode thisNode = addNode();
-                    addSelfEdge(thisNode, reason.substring(lastI, i));
-                    lastI = i + 1;
-
-                    if (parentLabel != null) {
-                        addEdge(parentNodes.pop(), parentLabel, thisNode);
-                    }
-                    break;
-                case ':':
-                    parentLabel = reason.substring(lastI, i);
-                    lastI = i + 1;
-                    break;
+                }
+                scope++;
+            } else if (c == ')') {
+                scope--;
+                if (scope == 0) {
+                    childReasonPart = reason.substring(lastI, i);
+                }
+            } else if (c == ':' && scope == 0) {
+                customLabel = reason.substring(lastI, i);
+                lastI = i + 1;
+            } else if (c == '=' && scope == 0) {
+                if (parentReasonPart == null) {
+                    parentReasonPart = reason.substring(lastI, i);
+                }
+                foundValue = true;
+                lastI = i + 1;
             }
         }
         
-        if (lastI == 0) {
-            Node reasonNode = aseById.get(reason);
-            if (reasonNode != null) {
-                result.add(nodeMap.get(reasonNode));
+        String lastReason = reason.substring(lastI);
+        
+        if(lastReason.length() > 0) {
+            parentReasonPart = parentReasonPart == null ? lastReason : parentReasonPart;
+            
+            PlainNode reasonNode = nodeMap.get(aseById.get(parentReasonPart));
+            if (reasonNode == null) {
+                reasonNode = addNode();
+                addSelfEdge(reasonNode, parentReasonPart);
+            }
+            if (customLabel == null) {
+                addEdge(parent, parentLabel, reasonNode);
             } else {
-                PlainNode node = addNode();
-                addSelfEdge(node, reason);
-                result.add(node);
+                addEdge(parent, customLabel, reasonNode);
             }
+            
+            if (foundValue) {
+                PlainNode valueNode = nodeMap.get(aseById.get(lastReason));
+                PlainNode variableNode = addNode();
+                addSelfEdge(variableNode, CfslLabels.VARIABLE_NODE_LABEL);
+                addEdge(reasonNode, CfslLabels.VALUE_LABEL, variableNode);
+                addEdge(valueNode, CfslLabels.VALUE_LABEL, variableNode);
+            }
+            
+            parseAbortReason(reasonNode, CfslLabels.CHILD_LABEL, childReasonPart, false);
         }
-        
-        return result;
     }
     
     private String getAbortLabel(AbortEdge abortEdge) {

@@ -12,7 +12,8 @@
    <children>
       <QuadCurve fx:id="curve" controlX="75.0" controlY="25.0" endX="150.0" fill="TRANSPARENT" startY="50.0" stroke="#999999" styleClass="edge-curve" />
       <TextField fx:id="textInput" alignment="CENTER" layoutX="53.0" layoutY="13.0" prefHeight="25.0" prefWidth="45.0" styleClass="minimal" text="child" />
-      <Rectangle fx:id="origin" height="8.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="8.0" />
+      <Rectangle fx:id="origin" height="8.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" styleClass="start" width="8.0" />
+      <Rectangle fx:id="end" height="6.0" layoutX="146.0" stroke="BLACK" strokeType="INSIDE" styleClass="end" width="6.0" />
    </children>
    <styleClass>
       <String fx:value="edge" />

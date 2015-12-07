@@ -56,6 +56,7 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
     
     private void initialize() {
         TactilePane.setDraggable(getView(), false);
+        curve.setFill(null);
         
         // Recalculate middle of the curve when curve changes
         curve.startXProperty().addListener(o -> updateMiddle());
@@ -135,7 +136,7 @@ public abstract class EdgeController<M extends Edge> extends GraphElementControl
         QuadCurve invisibleCurve = new QuadCurve();
         invisibleCurve.setOpacity(0);
         invisibleCurve.setStrokeWidth(8);
-        invisibleCurve.setFill(Color.TRANSPARENT);
+        invisibleCurve.setFill(null);
         invisibleCurve.setStroke(Color.BLACK);
         invisibleCurve.startXProperty().bind(curve.startXProperty());
         invisibleCurve.startYProperty().bind(curve.startYProperty());

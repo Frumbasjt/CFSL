@@ -22,9 +22,12 @@ public class CfslLabels {
     public static final String BRANCH_DEFAULT_LABEL = "branchDefault";
     public static final String FLOW_LABEL = "flow";
     public static final String CONDITION_LABEL = "condition";
+    public static final String VALUE_LABEL = "value";
+    public static final String CHILD_LABEL = "child";
     
     // Standard labels for self edges that are used to label nodes
     public static final String KEY_ELEMENT_NODE_LABEL = "KeyElement";
     public static final String ABORT_NODE_LABEL = "Abort";
     public static final String BRANCH_NODE_LABEL = "Branch";
+    public static final String VARIABLE_NODE_LABEL = "?";
 }

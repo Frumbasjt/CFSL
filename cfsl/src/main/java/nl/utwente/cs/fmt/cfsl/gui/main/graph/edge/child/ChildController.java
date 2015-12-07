@@ -20,6 +20,7 @@ import nl.utwente.cs.fmt.cfsl.model.cfslplus.ChildEdge;
 public class ChildController extends EdgeController<ChildEdge> {
     @FXML private TextField textInput;
     @FXML private Rectangle origin;
+    @FXML private Rectangle end;
     
     public ChildController(ChildEdge model) {
         super("Child Edge", model);
@@ -27,6 +28,8 @@ public class ChildController extends EdgeController<ChildEdge> {
         // Bind origin circle to start of curve
         origin.layoutXProperty().bind(curve.startXProperty().subtract(origin.widthProperty().divide(2)));
         origin.layoutYProperty().bind(curve.startYProperty().subtract(origin.heightProperty().divide(2)));
+        end.layoutXProperty().bind(curve.endXProperty().subtract(end.widthProperty().divide(2)));
+        end.layoutYProperty().bind(curve.endYProperty().subtract(end.heightProperty().divide(2)));
         
         // Center text input
         middleProperty().addListener(o -> updateTextLocation());
